@@ -1,0 +1,110 @@
+{
+  "name": "mini-tripadvisor-restaurants",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mini Tripadvisor Restaurants",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:spetushkov/mini-tripadvisor-restaurants.git"
+  },
+  "author": "Sergey Petushkou",
+  "homepage": "https://github.com/spetushkov/mini-tripadvisor-restaurants",
+  "bugs": {
+    "url": "https://github.com/spetushkov/mini-tripadvisor-restaurants/issues"
+  },
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "android": "expo start --android",
+    "clean": "rm -rf node_modules && rm -rf coverage",
+    "compile": "tsc --noEmit",
+    "eject": "expo eject",
+    "format": "prettier --write .",
+    "git": "git add . && git commit -m :rocket: && git push -f",
+    "ios": "expo start --ios",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
+    "setup": "yarn clean && yarn",
+    "setup:git": "sudo rm -rf .git && git init && git remote add origin git@github.com:spetushkov/mini-tripadvisor-restaurants.git",
+    "start": "expo start",
+    "test": "jest --watch",
+    "test:all": "jest --watchAll=false",
+    "test:coverage": "jest --coverage",
+    "test:staged": "jest --onlyChanged",
+    "web": "expo start --web"
+  },
+  "keywords": [
+    "React Native, Expo"
+  ],
+  "dependencies": {
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/bottom-tabs": "^5.10.6",
+    "@react-navigation/drawer": "^5.10.6",
+    "@react-navigation/native": "^5.8.6",
+    "@react-navigation/stack": "^5.12.3",
+    "class-transformer": "^0.3.1",
+    "class-validator": "^0.12.2",
+    "dotenv-expand": "^5.1.0",
+    "dotenv-flow": "^3.2.0",
+    "expo": "~39.0.2",
+    "expo-constants": "^9.2.0",
+    "expo-font": "^8.3.0",
+    "expo-status-bar": "~1.0.2",
+    "firebase": "^8.1.2",
+    "native-base": "^2.13.15",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
+    "react-native-elements": "^3.0.0-alpha.1",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-safe-area-context": "3.1.4",
+    "react-native-screens": "^2.13.0",
+    "react-native-web": "~0.13.12",
+    "react-router-dom": "^5.2.0",
+    "reflect-metadata": "^0.1.13",
+    "validate.js": "^0.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "@types/enzyme": "^3.10.7",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.14",
+    "@types/react": "~16.9.35",
+    "@types/react-dom": "~16.9.8",
+    "@types/react-native": "~0.63.2",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/react-test-renderer": "^16.9.3",
+    "@types/validate.js": "^0.11.0",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "cross-env": "^7.0.2",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.13.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.4",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-react-native": "^3.10.0",
+    "husky": "^4.3.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.0",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2",
+    "prettier-plugin-organize-imports": "^1.1.1",
+    "prettier-plugin-package": "^1.2.0",
+    "react-test-renderer": "^16.14.0",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn compile && lint-staged && yarn test:staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": "eslint --fix",
+    "*": "prettier --write"
+  }
+}
