@@ -1,5 +1,5 @@
 import Constants from 'expo-constants';
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import { Logger } from '../log/Logger';
 
 const firebaseConfig = {
@@ -12,6 +12,8 @@ const firebaseConfig = {
 };
 
 export const FirebaseApp = (): void => {
-  firebase.initializeApp(firebaseConfig);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   Logger.log(`Firebase app ${firebaseConfig.projectId}: started`);
 };

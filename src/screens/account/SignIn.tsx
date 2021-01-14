@@ -1,22 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import Toast from 'react-native-easy-toast';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MyDivider } from '../../components/divider/Divider';
+import { UserSignIn } from '../../components/user/UserSignIn';
 import { AccountStackRoutes } from '../../navigation/routes/NavigationRoutes';
 import { Theme } from '../../theme/Theme';
 
 export const SignIn = (): JSX.Element => {
+  const toastRef = useRef<Toast>(null);
   const navigation = useNavigation();
 
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <Image
         source={require('../../assets/img/logo.png')}
         resizeMode='contain'
         style={styles.image}
       />
       <View style={styles.view}>
-        <Text>Sign in</Text>
+        <UserSignIn toastRef={toastRef} />
         <Text style={styles.textRegister}>
           Do not have an account?{' '}
           <Text
@@ -26,10 +30,11 @@ export const SignIn = (): JSX.Element => {
             Sign up
           </Text>
         </Text>
+        <Toast ref={toastRef} position='top' opacity={0.9} />
       </View>
       <MyDivider style={styles.divider} />
       <Text>Social Login</Text>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

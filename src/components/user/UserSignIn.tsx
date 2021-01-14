@@ -20,7 +20,6 @@ import { Loading } from '../loading/Loading';
 interface FormState {
   email: string;
   password: string;
-  confirmPassword: string;
 }
 type FormConstraints = Partial<Record<keyof FormState, Object>>;
 type FormValidationState = Partial<Record<keyof FormState, string[]>>;
@@ -38,18 +37,11 @@ const formConstraints: FormConstraints = {
       message: '^at least 6 characters required',
     },
   },
-  confirmPassword: {
-    length: {
-      minimum: 6,
-      message: '^at least 6 characters required',
-    },
-  },
 };
 
 const initialFormState: FormState = {
   email: '',
   password: '',
-  confirmPassword: '',
 };
 
 const initialFormValidationState: FormValidationState = {};
@@ -58,11 +50,10 @@ type Props = {
   toastRef: React.RefObject<Toast>;
 };
 
-export const UserSignUp = (props: Props): JSX.Element => {
+export const UserSignIn = (props: Props): JSX.Element => {
   const { toastRef } = props;
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
-  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
   const [form, setForm] = useState<FormState>(initialFormState);
   const [formValidation, setFormValidation] = useState<FormValidationState>(
     initialFormValidationState,
@@ -97,26 +88,12 @@ export const UserSignUp = (props: Props): JSX.Element => {
 
     if (!formValidation) {
       formValidation = {};
-      const { password, confirmPassword } = form;
+      const { password } = form;
 
       if (validate.isEmpty(password)) {
         formValidation = {
           ...formValidation,
           password: ['is required'],
-        };
-      }
-
-      if (validate.isEmpty(confirmPassword)) {
-        formValidation = {
-          ...formValidation,
-          confirmPassword: ['is required'],
-        };
-      }
-
-      if (password && confirmPassword && password !== confirmPassword) {
-        formValidation = {
-          ...formValidation,
-          confirmPassword: ['passwords do not match'],
         };
       }
     }
@@ -136,7 +113,7 @@ export const UserSignUp = (props: Props): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Loading isVisible={loading} text='Signing up...' />
+      <Loading isVisible={loading} text='Signing in...' />
       <View>
         <Item style={styles.item} error={!!formValidation.email}>
           <Input
@@ -164,24 +141,8 @@ export const UserSignUp = (props: Props): JSX.Element => {
         </Item>
         <FormItemError value={formValidation.password} />
       </View>
-      <View>
-        <Item style={styles.item} error={!!formValidation.confirmPassword}>
-          <Input
-            placeholder='Confirm password'
-            secureTextEntry={!showRepeatPassword}
-            onChange={(e) => changeInputHandler(e, 'confirmPassword')}
-          />
-          <Icon
-            type='MaterialCommunityIcons'
-            name={showRepeatPassword ? 'eye-off-outline' : 'eye-outline'}
-            style={styles.icon}
-            onPress={() => setShowRepeatPassword(!showRepeatPassword)}
-          />
-        </Item>
-        <FormItemError value={formValidation.confirmPassword} />
-      </View>
       <Button style={styles.button} block={true} onPress={submitHandler}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={styles.buttonText}>Sign In</Text>
       </Button>
     </View>
   );

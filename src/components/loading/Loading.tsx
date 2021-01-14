@@ -5,7 +5,7 @@ import { Theme } from '../../theme/Theme';
 
 type Props = {
   isVisible: boolean;
-  text: string;
+  text?: string;
 };
 
 export const Loading = (props: Props): JSX.Element => {
