@@ -8,10 +8,12 @@ import { Loading } from '../loading/Loading';
 
 export const UserLogged = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
 
   const signOutHandler = async () => {
     try {
       setLoading(true);
+      setLoadingText('Signing out...');
       await firebase.auth().signOut();
       setLoading(false);
     } catch (error) {
@@ -22,7 +24,7 @@ export const UserLogged = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Loading isVisible={loading} text='Signing out...' />
+      <Loading isVisible={loading} text={loadingText} />
       <View style={styles.content}>
         <Text style={styles.text}>UserLogged</Text>
         <Button style={styles.button} block={true} onPress={signOutHandler}>

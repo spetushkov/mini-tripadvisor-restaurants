@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import firebase from 'firebase';
 import { Button, Icon, Input, Item } from 'native-base';
 import React, { useState } from 'react';
 import {
@@ -17,11 +16,17 @@ import { ObjectUtils } from '../../utils/ObjectUtils';
 import { FormItemError } from '../form/FormItemError';
 import { Loading } from '../loading/Loading';
 
-interface FormState {
+type Props = {
+  toastRef: React.RefObject<Toast>;
+};
+
+type FormState = {
   email: string;
   password: string;
-}
+};
+
 type FormConstraints = Partial<Record<keyof FormState, Object>>;
+
 type FormValidationState = Partial<Record<keyof FormState, string[]>>;
 
 const formConstraints: FormConstraints = {
@@ -46,10 +51,6 @@ const initialFormState: FormState = {
 
 const initialFormValidationState: FormValidationState = {};
 
-type Props = {
-  toastRef: React.RefObject<Toast>;
-};
-
 export const UserSignInForm = (props: Props): JSX.Element => {
   const { toastRef } = props;
   const navigation = useNavigation();
@@ -59,6 +60,7 @@ export const UserSignInForm = (props: Props): JSX.Element => {
     initialFormValidationState,
   );
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
 
   const submitHandler = async () => {
     const formValidation = validateForm();
@@ -73,7 +75,8 @@ export const UserSignInForm = (props: Props): JSX.Element => {
 
     try {
       setLoading(true);
-      await firebase.auth().createUserWithEmailAndPassword(form.email, form.password);
+      setLoadingText('Signing in...');
+      // await firebase.auth().createUserWithEmailAndPassword(form.email, form.password);
       navigation.navigate(BottomTabRoutes.account);
       setLoading(false);
     } catch (error) {
@@ -113,7 +116,7 @@ export const UserSignInForm = (props: Props): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Loading isVisible={loading} text='Signing in...' />
+      <Loading isVisible={loading} text={loadingText} />
       <View>
         <Item style={styles.item} error={!!formValidation.email}>
           <Input
@@ -144,10 +147,10 @@ export const UserSignInForm = (props: Props): JSX.Element => {
       <Button style={styles.button} block={true} onPress={submitHandler}>
         <Text style={styles.buttonText}>Sign In</Text>
       </Button>
-      <Text style={styles.textSignup}>
+      <Text style={styles.textAccount}>
         Do not have an account?{' '}
         <Text
-          style={styles.buttonSignup}
+          style={styles.buttonAccount}
           onPress={() => navigation.navigate(AccountStackRoutes.signup)}
         >
           Sign Up
@@ -180,12 +183,12 @@ const styles = StyleSheet.create({
   icon: {
     color: '#c1c1c1',
   },
-  textSignup: {
+  textAccount: {
     marginTop: 15,
     marginLeft: 10,
     marginRight: 10,
   },
-  buttonSignup: {
+  buttonAccount: {
     color: Theme.color.green,
     fontWeight: 'bold',
   },

@@ -11,18 +11,24 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
-import { BottomTabRoutes } from '../../navigation/routes/NavigationRoutes';
+import { AccountStackRoutes, BottomTabRoutes } from '../../navigation/routes/NavigationRoutes';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
 import { FormItemError } from '../form/FormItemError';
 import { Loading } from '../loading/Loading';
 
-interface FormState {
+type Props = {
+  toastRef: React.RefObject<Toast>;
+};
+
+type FormState = {
   email: string;
   password: string;
   confirmPassword: string;
-}
+};
+
 type FormConstraints = Partial<Record<keyof FormState, Object>>;
+
 type FormValidationState = Partial<Record<keyof FormState, string[]>>;
 
 const formConstraints: FormConstraints = {
@@ -54,10 +60,6 @@ const initialFormState: FormState = {
 
 const initialFormValidationState: FormValidationState = {};
 
-type Props = {
-  toastRef: React.RefObject<Toast>;
-};
-
 export const UserSignUpForm = (props: Props): JSX.Element => {
   const { toastRef } = props;
   const navigation = useNavigation();
@@ -68,6 +70,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
     initialFormValidationState,
   );
   const [loading, setLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState('');
 
   const submitHandler = async () => {
     const formValidation = validateForm();
@@ -82,6 +85,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
 
     try {
       setLoading(true);
+      setLoadingText('Signing up...');
       await firebase.auth().createUserWithEmailAndPassword(form.email, form.password);
       navigation.navigate(BottomTabRoutes.account);
       setLoading(false);
@@ -136,7 +140,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Loading isVisible={loading} text='Signing up...' />
+      <Loading isVisible={loading} text={loadingText} />
       <View>
         <Item style={styles.item} error={!!formValidation.email}>
           <Input
@@ -183,6 +187,15 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
       <Button style={styles.button} block={true} onPress={submitHandler}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </Button>
+      <Text style={styles.textAccount}>
+        Already have an account?{' '}
+        <Text
+          style={styles.buttonAccount}
+          onPress={() => navigation.navigate(AccountStackRoutes.signin)}
+        >
+          Sign In
+        </Text>
+      </Text>
     </View>
   );
 };
@@ -209,5 +222,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: '#c1c1c1',
+  },
+  textAccount: {
+    marginTop: 15,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  buttonAccount: {
+    color: Theme.color.green,
+    fontWeight: 'bold',
   },
 });
