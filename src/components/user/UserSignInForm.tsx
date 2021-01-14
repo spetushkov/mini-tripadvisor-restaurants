@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
-import { BottomTabRoutes } from '../../navigation/routes/NavigationRoutes';
+import { AccountStackRoutes, BottomTabRoutes } from '../../navigation/routes/NavigationRoutes';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
 import { FormItemError } from '../form/FormItemError';
@@ -50,7 +50,7 @@ type Props = {
   toastRef: React.RefObject<Toast>;
 };
 
-export const UserSignIn = (props: Props): JSX.Element => {
+export const UserSignInForm = (props: Props): JSX.Element => {
   const { toastRef } = props;
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
@@ -144,6 +144,15 @@ export const UserSignIn = (props: Props): JSX.Element => {
       <Button style={styles.button} block={true} onPress={submitHandler}>
         <Text style={styles.buttonText}>Sign In</Text>
       </Button>
+      <Text style={styles.textSignup}>
+        Do not have an account?{' '}
+        <Text
+          style={styles.buttonSignup}
+          onPress={() => navigation.navigate(AccountStackRoutes.signup)}
+        >
+          Sign Up
+        </Text>
+      </Text>
     </View>
   );
 };
@@ -170,5 +179,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: '#c1c1c1',
+  },
+  textSignup: {
+    marginTop: 15,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  buttonSignup: {
+    color: Theme.color.green,
+    fontWeight: 'bold',
   },
 });

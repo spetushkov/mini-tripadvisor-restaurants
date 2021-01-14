@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { UserSignUp } from '../../components/user/UserSignUp';
+import { UserSignUpForm } from '../../components/user/UserSignUpForm';
 
 export const SignUp = (): JSX.Element => {
   const toastRef = useRef<Toast>(null);
@@ -15,9 +15,9 @@ export const SignUp = (): JSX.Element => {
         style={styles.image}
       />
       <View style={styles.view}>
-        <UserSignUp toastRef={toastRef} />
+        <UserSignUpForm toastRef={toastRef} />
+        <Toast ref={toastRef} position='top' opacity={0.9} />
       </View>
-      <Toast ref={toastRef} position='top' opacity={0.9} />
     </KeyboardAwareScrollView>
   );
 };

@@ -21,14 +21,14 @@ const StackNavigator = (): JSX.Element => {
         name={AccountStackRoutes.signin}
         component={SignIn}
         options={{
-          title: 'Sign in',
+          title: 'Sign In',
         }}
       />
       <Stack.Screen
         name={AccountStackRoutes.signup}
         component={SignUp}
         options={{
-          title: 'Sign up',
+          title: 'Sign Up',
         }}
       />
     </Stack.Navigator>

@@ -58,7 +58,7 @@ type Props = {
   toastRef: React.RefObject<Toast>;
 };
 
-export const UserSignUp = (props: Props): JSX.Element => {
+export const UserSignUpForm = (props: Props): JSX.Element => {
   const { toastRef } = props;
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
