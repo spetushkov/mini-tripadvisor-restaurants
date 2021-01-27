@@ -8,7 +8,7 @@ import {
 } from '@react-navigation/drawer';
 import React from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Account } from '../../screens/auth/Account';
+import { Account } from '../../screens/account/Account';
 import { Favorites } from '../../screens/Favorites';
 import { Restaurants } from '../../screens/Restaurants';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import 'react-native-gesture-handler';
 import 'reflect-metadata';
 import { Firebase } from '../../firebase/Firebase';
-import { Screens } from '../../screens/Screens';
+import { Screens } from '../../screens/config/Screens';
 
 type Props = {
   children: React.ReactNode;
