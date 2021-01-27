@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Button, Icon } from 'native-base';
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
-import { AccountStackRoutes } from '../../navigation/routes/NavigationRoutes';
+import { Routes } from '../../navigation/route/Routes';
 import { Theme } from '../../theme/Theme';
 
-export const UserGuest = (): JSX.Element => {
+export const Guest = (): JSX.Element => {
   const navigation = useNavigation();
 
   return (
@@ -19,7 +19,7 @@ export const UserGuest = (): JSX.Element => {
       <Button
         style={styles.button}
         block={true}
-        onPress={() => navigation.navigate(AccountStackRoutes.signin)}
+        onPress={() => navigation.navigate(Routes.AccountStack.signin)}
       >
         <Text style={styles.buttonText}>View your profile</Text>
       </Button>

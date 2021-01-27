@@ -1,6 +1,5 @@
 import Constants from 'expo-constants';
 import firebase from 'firebase';
-import { Logger } from '../log/Logger';
 
 const firebaseConfig = {
   apiKey: Constants.manifest.extra.REACT_NATIVE_FIREBASE_API_KEY,
@@ -11,9 +10,9 @@ const firebaseConfig = {
   appId: Constants.manifest.extra.REACT_NATIVE_FIREBASE_APP_ID,
 };
 
-export const FirebaseApp = (): void => {
+export const Firebase = (): void => {
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
-  Logger.log(`Firebase app ${firebaseConfig.projectId}: started`);
+  console.log(`Firebase app ${firebaseConfig.projectId}: started`);
 };

@@ -1,14 +1,14 @@
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { Overlay } from 'react-native-elements';
-import { Theme } from '../../theme/Theme';
+import { Theme } from '../../../theme/Theme';
 
 type Props = {
   isVisible: boolean;
   text?: string;
 };
 
-export const Loading = (props: Props): JSX.Element => {
+export const Loader = (props: Props): JSX.Element => {
   const { isVisible, text } = props;
 
   return (

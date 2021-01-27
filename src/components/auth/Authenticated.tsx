@@ -2,11 +2,10 @@ import firebase from 'firebase';
 import { Button } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Logger } from '../../log/Logger';
 import { Theme } from '../../theme/Theme';
-import { Loading } from '../loading/Loading';
+import { Loader } from '../utility/loader/Loader';
 
-export const UserLogged = (): JSX.Element => {
+export const Authenticated = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('');
 
@@ -17,14 +16,14 @@ export const UserLogged = (): JSX.Element => {
       await firebase.auth().signOut();
       setLoading(false);
     } catch (error) {
-      Logger.log(error.message);
+      console.log(error.message);
       setLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Loading isVisible={loading} text={loadingText} />
+      <Loader isVisible={loading} text={loadingText} />
       <View style={styles.content}>
         <Text style={styles.text}>UserLogged</Text>
         <Button style={styles.button} block={true} onPress={signOutHandler}>

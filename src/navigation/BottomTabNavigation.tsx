@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import React from 'react';
 import { Theme } from '../theme/Theme';
-import { BottomTabRoutes } from './routes/NavigationRoutes';
+import { Routes } from './route/Routes';
 import { AccountStack } from './stack/AccountStack';
 import { FavoritesStack } from './stack/FavoritesStack';
 import { RestaurantsStack } from './stack/RestaurantsStack';
@@ -25,7 +25,7 @@ const BottomTab = createBottomTabNavigator();
 const BottomTabNavigator = (): JSX.Element => {
   return (
     <BottomTab.Navigator
-      initialRouteName={BottomTabRoutes.restaurants}
+      initialRouteName={Routes.BottomTab.restaurants}
       tabBarOptions={{
         inactiveTintColor: '#646464',
         activeTintColor: Theme.color.green,
@@ -35,27 +35,27 @@ const BottomTabNavigator = (): JSX.Element => {
       }}
     >
       <BottomTab.Screen
-        name={BottomTabRoutes.restaurants}
+        name={Routes.BottomTab.restaurants}
         component={RestaurantsStack}
         options={screenOptions('Restaurants', 'compass-outline')}
       />
       <BottomTab.Screen
-        name={BottomTabRoutes.favorites}
+        name={Routes.BottomTab.favorites}
         component={FavoritesStack}
         options={screenOptions('Favorites', 'heart-outline')}
       />
       <BottomTab.Screen
-        name={BottomTabRoutes.topRestaurants}
+        name={Routes.BottomTab.topRestaurants}
         component={TopRestaurantsStack}
         options={screenOptions('Top 5', 'star-outline')}
       />
       <BottomTab.Screen
-        name={BottomTabRoutes.search}
+        name={Routes.BottomTab.search}
         component={SearchStack}
         options={screenOptions('Search', 'magnify')}
       />
       <BottomTab.Screen
-        name={BottomTabRoutes.account}
+        name={Routes.BottomTab.account}
         component={AccountStack}
         options={screenOptions('Account', 'home-outline')}
       />

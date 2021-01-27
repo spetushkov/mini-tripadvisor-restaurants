@@ -1,10 +1,12 @@
 import React, { useRef } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { UserSignUpForm } from '../../components/user/UserSignUpForm';
+import { SignInForm } from '../../components/auth/SignInForm';
+import { MyDivider } from '../../components/utility/content/Divider';
+import { Theme } from '../../theme/Theme';
 
-export const SignUp = (): JSX.Element => {
+export const SignIn = (): JSX.Element => {
   const toastRef = useRef<Toast>(null);
 
   return (
@@ -15,9 +17,11 @@ export const SignUp = (): JSX.Element => {
         style={styles.image}
       />
       <View style={styles.view}>
-        <UserSignUpForm toastRef={toastRef} />
-        <Toast ref={toastRef} position='top' opacity={0.9} />
+        <SignInForm toastRef={toastRef} />
       </View>
+      <MyDivider style={styles.divider} />
+      <Text>Social Login</Text>
+      <Toast ref={toastRef} position='top' opacity={0.9} />
     </KeyboardAwareScrollView>
   );
 };
@@ -31,5 +35,10 @@ const styles = StyleSheet.create({
   view: {
     marginLeft: 40,
     marginRight: 40,
+  },
+  divider: {
+    borderBottomColor: Theme.color.green,
+    width: '80%',
+    margin: 40,
   },
 });

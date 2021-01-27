@@ -1,4 +1,4 @@
-export const BottomTabRoutes = {
+export const BottomTab = {
   restaurants: 'restaurants',
   favorites: 'favorites',
   topRestaurants: 'topRestaurants',
@@ -6,24 +6,33 @@ export const BottomTabRoutes = {
   account: 'account',
 };
 
-export const AccountStackRoutes = {
+const AccountStack = {
   account: 'account',
   signin: 'signin',
   signup: 'signup',
 };
 
-export const FavoritesStackRoutes = {
+const FavoritesStack = {
   favorites: 'favorites',
 };
 
-export const RestaurantsStackRoutes = {
+const RestaurantsStack = {
   restaurants: 'restaurants',
 };
 
-export const SearchStackRoutes = {
+const SearchStack = {
   search: 'search',
 };
 
-export const TopRestaurantsStackRoutes = {
+const TopRestaurantsStack = {
   topRestaurants: 'topRestaurants',
+};
+
+export const Routes = {
+  BottomTab,
+  AccountStack,
+  FavoritesStack,
+  RestaurantsStack,
+  SearchStack,
+  TopRestaurantsStack,
 };

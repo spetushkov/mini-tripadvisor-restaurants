@@ -1,8 +1,8 @@
 import React from 'react';
-import { App as AppAlias } from './src/app/App';
+import { App } from './src/components/app/App';
 
-const App = (): JSX.Element => {
-  return <AppAlias />;
+const Index = (): JSX.Element => {
+  return <App />;
 };
 
-export default App;
+export default Index;

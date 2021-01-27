@@ -5,7 +5,7 @@ type Props = {
   value: string[] | undefined;
 };
 
-export const FormItemError = (props: Props): JSX.Element | null => {
+export const FormControlError = (props: Props): JSX.Element | null => {
   const { value } = props;
 
   if (!value) {

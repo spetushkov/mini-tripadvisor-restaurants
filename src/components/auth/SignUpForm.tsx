@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
-import { AccountStackRoutes, BottomTabRoutes } from '../../navigation/routes/NavigationRoutes';
+import { Routes } from '../../navigation/route/Routes';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
-import { FormItemError } from '../form/FormItemError';
-import { Loading } from '../loading/Loading';
+import { FormControlError } from '../utility/form/FormControlError';
+import { Loader } from '../utility/loader/Loader';
 
 type Props = {
   toastRef: React.RefObject<Toast>;
@@ -60,7 +60,7 @@ const initialFormState: FormState = {
 
 const initialFormValidationState: FormValidationState = {};
 
-export const UserSignUpForm = (props: Props): JSX.Element => {
+export const SignUpForm = (props: Props): JSX.Element => {
   const { toastRef } = props;
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
@@ -87,7 +87,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
       setLoading(true);
       setLoadingText('Signing up...');
       await firebase.auth().createUserWithEmailAndPassword(form.email, form.password);
-      navigation.navigate(BottomTabRoutes.account);
+      navigation.navigate(Routes.BottomTab.account);
       setLoading(false);
     } catch (error) {
       toastRef.current?.show(error.message);
@@ -140,7 +140,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Loading isVisible={loading} text={loadingText} />
+      <Loader isVisible={loading} text={loadingText} />
       <View>
         <Item style={styles.item} error={!!formValidation.email}>
           <Input
@@ -150,7 +150,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
           />
           <Icon type='MaterialCommunityIcons' name='at' style={styles.icon} />
         </Item>
-        <FormItemError value={formValidation.email} />
+        <FormControlError value={formValidation.email} />
       </View>
       <View>
         <Item style={styles.item} error={!!formValidation.password}>
@@ -166,7 +166,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
             onPress={() => setShowPassword(!showPassword)}
           />
         </Item>
-        <FormItemError value={formValidation.password} />
+        <FormControlError value={formValidation.password} />
       </View>
       <View>
         <Item style={styles.item} error={!!formValidation.confirmPassword}>
@@ -182,7 +182,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
             onPress={() => setShowRepeatPassword(!showRepeatPassword)}
           />
         </Item>
-        <FormItemError value={formValidation.confirmPassword} />
+        <FormControlError value={formValidation.confirmPassword} />
       </View>
       <Button style={styles.button} block={true} onPress={submitHandler}>
         <Text style={styles.buttonText}>Sign Up</Text>
@@ -191,7 +191,7 @@ export const UserSignUpForm = (props: Props): JSX.Element => {
         Already have an account?{' '}
         <Text
           style={styles.buttonAccount}
-          onPress={() => navigation.navigate(AccountStackRoutes.signin)}
+          onPress={() => navigation.navigate(Routes.AccountStack.signin)}
         >
           Sign In
         </Text>

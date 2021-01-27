@@ -1,8 +1,8 @@
 import firebase from 'firebase';
 import React, { useEffect, useState } from 'react';
-import { Loading } from '../../components/loading/Loading';
-import { UserGuest } from '../../components/user/UserGuest';
-import { UserLogged } from '../../components/user/UserLogged';
+import { Authenticated } from '../../components/auth/Authenticated';
+import { Guest } from '../../components/auth/Guest';
+import { Loader } from '../../components/utility/loader/Loader';
 
 export const Account = (): JSX.Element => {
   const [userLogged, setUserLogged] = useState<boolean | null>(null);
@@ -14,8 +14,8 @@ export const Account = (): JSX.Element => {
   }, []);
 
   if (userLogged === null) {
-    return <Loading isVisible={true} text='Loading...' />;
+    return <Loader isVisible={true} text='Loading...' />;
   }
 
-  return userLogged ? <UserLogged /> : <UserGuest />;
+  return userLogged ? <Authenticated /> : <Guest />;
 };
