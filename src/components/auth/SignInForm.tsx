@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
-import { Routes } from '../../navigation/route/Routes';
+import { Route } from '../../navigation/Route';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
 import { FormControlError } from '../utility/form/FormControlError';
@@ -152,7 +152,7 @@ export const SignInForm = (props: Props): JSX.Element => {
         Do not have an account?{' '}
         <Text
           style={styles.buttonAccount}
-          onPress={() => navigation.navigate(Routes.AccountStack.signup)}
+          onPress={() => navigation.navigate(Route.AccountStack.signup)}
         >
           Sign Up
         </Text>

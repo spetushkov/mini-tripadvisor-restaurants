@@ -28,7 +28,7 @@ const TopRestaurantsStack = {
   topRestaurants: 'topRestaurants',
 };
 
-export const Routes = {
+export const Route = {
   BottomTab,
   AccountStack,
   FavoritesStack,

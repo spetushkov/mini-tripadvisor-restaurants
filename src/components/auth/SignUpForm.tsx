@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
-import { Routes } from '../../navigation/route/Routes';
+import { Route } from '../../navigation/Route';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
 import { FormControlError } from '../utility/form/FormControlError';
@@ -87,7 +87,7 @@ export const SignUpForm = (props: Props): JSX.Element => {
       setLoading(true);
       setLoadingText('Signing up...');
       await firebase.auth().createUserWithEmailAndPassword(form.email, form.password);
-      navigation.navigate(Routes.BottomTab.account);
+      navigation.navigate(Route.BottomTab.account);
       setLoading(false);
     } catch (error) {
       toastRef.current?.show(error.message);
@@ -191,7 +191,7 @@ export const SignUpForm = (props: Props): JSX.Element => {
         Already have an account?{' '}
         <Text
           style={styles.buttonAccount}
-          onPress={() => navigation.navigate(Routes.AccountStack.signin)}
+          onPress={() => navigation.navigate(Route.AccountStack.signin)}
         >
           Sign In
         </Text>

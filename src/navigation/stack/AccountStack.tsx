@@ -3,7 +3,7 @@ import React from 'react';
 import { Account } from '../../pages/auth/Account';
 import { SignIn } from '../../pages/auth/SignIn';
 import { SignUp } from '../../pages/auth/SignUp';
-import { Routes } from '../route/Routes';
+import { Route } from '../Route';
 
 const Stack = createStackNavigator();
 
@@ -11,21 +11,21 @@ const StackNavigator = (): JSX.Element => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={Routes.AccountStack.account}
+        name={Route.AccountStack.account}
         component={Account}
         options={{
           title: 'Account',
         }}
       />
       <Stack.Screen
-        name={Routes.AccountStack.signin}
+        name={Route.AccountStack.signin}
         component={SignIn}
         options={{
           title: 'Sign In',
         }}
       />
       <Stack.Screen
-        name={Routes.AccountStack.signup}
+        name={Route.AccountStack.signup}
         component={SignUp}
         options={{
           title: 'Sign Up',
