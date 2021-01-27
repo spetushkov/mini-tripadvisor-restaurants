@@ -1,13 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import React from 'react';
-import { Theme } from '../theme/Theme';
-import { Route } from './Route';
-import { AccountStack } from './stack/AccountStack';
-import { FavoritesStack } from './stack/FavoritesStack';
-import { RestaurantsStack } from './stack/RestaurantsStack';
-import { SearchStack } from './stack/SearchStack';
-import { TopRestaurantsStack } from './stack/TopRestaurantsStack';
+import { Theme } from '../../theme/Theme';
+import { Route } from '../Route';
+import { AccountStack } from '../stack/AccountStack';
+import { FavoritesStack } from '../stack/FavoritesStack';
+import { RestaurantsStack } from '../stack/RestaurantsStack';
+import { SearchStack } from '../stack/SearchStack';
+import { TopRestaurantsStack } from '../stack/TopRestaurantsStack';
 
 type TabBarIconProps = { focused: boolean; color: string; size: number };
 

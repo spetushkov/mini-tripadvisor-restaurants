@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
-import { Route } from '../../navigation/Route';
+import { Route } from '../../router/Route';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
 import { FormControlError } from '../utility/form/FormControlError';

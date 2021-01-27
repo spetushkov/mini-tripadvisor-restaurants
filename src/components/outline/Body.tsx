@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigation } from '../../navigation/Navigation';
+import { Routes } from '../../router/Routes';
 
 export const Body = (): JSX.Element => {
-  return <Navigation />;
+  return <Routes />;
 };

@@ -8,9 +8,9 @@ import {
 } from '@react-navigation/drawer';
 import React from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Account } from '../pages/auth/Account';
-import { Favorites } from '../pages/Favorites';
-import { Restaurants } from '../pages/Restaurants';
+import { Account } from '../../screens/auth/Account';
+import { Favorites } from '../../screens/Favorites';
+import { Restaurants } from '../../screens/Restaurants';
 
 type Props = DrawerContentComponentProps;
 

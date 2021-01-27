@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Button, Icon } from 'native-base';
 import React from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
-import { Route } from '../../navigation/Route';
+import { Route } from '../../router/Route';
 import { Theme } from '../../theme/Theme';
 
 export const Guest = (): JSX.Element => {

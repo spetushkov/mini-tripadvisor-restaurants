@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { TopRestaurants } from '../../pages/TopRestaurants';
+import { Search } from '../../screens/Search';
 import { Route } from '../Route';
 
 const Stack = createStackNavigator();
@@ -9,16 +9,16 @@ const StackNavigator = (): JSX.Element => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name={Route.TopRestaurantsStack.topRestaurants}
-        component={TopRestaurants}
+        name={Route.SearchStack.search}
+        component={Search}
         options={{
-          title: 'Top Restaurants',
+          title: 'Search',
         }}
       />
     </Stack.Navigator>
   );
 };
 
-export const TopRestaurantsStack = (): JSX.Element => {
+export const SearchStack = (): JSX.Element => {
   return <StackNavigator />;
 };
