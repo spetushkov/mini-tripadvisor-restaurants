@@ -1,10 +1,17 @@
 import { AppLoading } from 'expo';
+import Constants from 'expo-constants';
 import React from 'react';
+import 'react-native-gesture-handler';
+import 'reflect-metadata';
+import { Firebase } from '../../firebase/Firebase';
 import { useCustomFonts } from '../../font/useCustomFonts';
 import { Router } from '../../router/Router';
 import { Outline } from '../outline/Outline';
 import { ExceptionHandler } from '../utility/exception/ExceptionHandler';
-import { AppConfig } from './AppConfig';
+import { AppContext } from './AppContext';
+
+const { REACT_NATIVE_ENV_NAME } = Constants.manifest.extra;
+console.log(`App: started in mode ${REACT_NATIVE_ENV_NAME}`);
 
 export const App = (): JSX.Element => {
   const { fontsLoading, fontsError } = useCustomFonts();
@@ -19,11 +26,13 @@ export const App = (): JSX.Element => {
 
   return (
     <ExceptionHandler>
-      <AppConfig>
-        <Router>
-          <Outline />
-        </Router>
-      </AppConfig>
+      <AppContext>
+        <Firebase>
+          <Router>
+            <Outline />
+          </Router>
+        </Firebase>
+      </AppContext>
     </ExceptionHandler>
   );
 };

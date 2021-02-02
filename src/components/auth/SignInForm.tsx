@@ -8,28 +8,30 @@ import {
   TextInputChangeEventData,
   View,
 } from 'react-native';
-import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
+import { useFirebase } from '../../firebase/useFirebase';
 import { Route } from '../../router/Route';
 import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
+import { useApp } from '../app/useApp';
+import { Divider } from '../utility/content/Divider';
+import { FormConstraints } from '../utility/form/FormConstraints';
 import { FormControlError } from '../utility/form/FormControlError';
+import { FormValidationState } from '../utility/form/FormValidationState';
 import { Loader } from '../utility/loader/Loader';
-
-type Props = {
-  toastRef: React.RefObject<Toast>;
-};
+import { AuthStyles } from './AuthStyles';
 
 type FormState = {
   email: string;
   password: string;
 };
 
-type FormConstraints = Partial<Record<keyof FormState, Object>>;
+const initialFormState: FormState = {
+  email: '',
+  password: '',
+};
 
-type FormValidationState = Partial<Record<keyof FormState, string[]>>;
-
-const formConstraints: FormConstraints = {
+const formConstraints: FormConstraints<FormState> = {
   email: {
     email: {
       message: '^a valid email format required',
@@ -44,25 +46,18 @@ const formConstraints: FormConstraints = {
   },
 };
 
-const initialFormState: FormState = {
-  email: '',
-  password: '',
-};
+const initialFormValidationState: FormValidationState<FormState> = {};
 
-const initialFormValidationState: FormValidationState = {};
-
-export const SignInForm = (props: Props): JSX.Element => {
-  const { toastRef } = props;
+export const SignInForm = (): JSX.Element | null => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState<FormState>(initialFormState);
-  const [formValidation, setFormValidation] = useState<FormValidationState>(
-    initialFormValidationState,
-  );
+  const [form, setForm] = useState(initialFormState);
+  const [formValidation, setFormValidation] = useState(initialFormValidationState);
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('');
+  const { signIn } = useFirebase();
+  const { showToast } = useApp();
 
-  const submitHandler = async () => {
+  const onSubmitForm = async () => {
     const formValidation = validateForm();
     if (formValidation && !ObjectUtils.isEmpty(formValidation)) {
       setFormValidation(formValidation);
@@ -75,20 +70,20 @@ export const SignInForm = (props: Props): JSX.Element => {
 
     try {
       setLoading(true);
-      setLoadingText('Signing in...');
-      // await firebase.auth().signInWithEmailAndPassword(form.email, form.password);
-      throw new Error('test error');
-      // navigation.navigate(Routes.BottomTabRoutes.account);
+      const result = await signIn(form.email, form.password);
       setLoading(false);
+      if (result) {
+        navigation.navigate(Route.AccountStack.account);
+      }
     } catch (error) {
-      toastRef.current?.show(error.message);
       setLoading(false);
+      showToast(error.message);
     }
   };
 
-  const validateForm = (): FormValidationState => {
+  const validateForm = (): FormValidationState<FormState> => {
     setFormValidation(initialFormValidationState);
-    let formValidation: FormValidationState = validate({ ...form }, formConstraints);
+    let formValidation: FormValidationState<FormState> = validate({ ...form }, formConstraints);
 
     if (!formValidation) {
       formValidation = {};
@@ -105,7 +100,7 @@ export const SignInForm = (props: Props): JSX.Element => {
     return formValidation;
   };
 
-  const changeInputHandler = (
+  const onChangeFromInput = (
     e: NativeSyntheticEvent<TextInputChangeEventData>,
     inputName: keyof FormState,
   ) => {
@@ -116,81 +111,67 @@ export const SignInForm = (props: Props): JSX.Element => {
   };
 
   return (
-    <View style={styles.container}>
-      <Loader isVisible={loading} text={loadingText} />
-      <View>
-        <Item style={styles.item} error={!!formValidation.email}>
-          <Input
-            placeholder='Email'
-            onChange={(e) => changeInputHandler(e, 'email')}
-            autoCapitalize='none'
-          />
-          <Icon type='MaterialCommunityIcons' name='at' style={styles.icon} />
-        </Item>
-        <FormControlError value={formValidation.email} />
-      </View>
-      <View>
-        <Item style={styles.item} error={!!formValidation.password}>
-          <Input
-            placeholder='Password'
-            secureTextEntry={!showPassword}
-            onChange={(e) => changeInputHandler(e, 'password')}
-          />
-          <Icon
-            type='MaterialCommunityIcons'
-            name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-            style={styles.icon}
-            onPress={() => setShowPassword(!showPassword)}
-          />
-        </Item>
-        <FormControlError value={formValidation.password} />
-      </View>
-      <Button style={styles.button} block={true} onPress={submitHandler}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </Button>
-      <Text style={styles.textAccount}>
-        Do not have an account?{' '}
-        <Text
-          style={styles.buttonAccount}
-          onPress={() => navigation.navigate(Route.AccountStack.signup)}
-        >
-          Sign Up
+    <View>
+      <View style={styles.emailPasswordAuth}>
+        <Loader isVisible={loading} text='sign in' />
+        <View>
+          <Item style={styles.item} error={!!formValidation.email}>
+            <Input
+              placeholder='Email'
+              onChange={(e) => onChangeFromInput(e, 'email')}
+              autoCapitalize='none'
+            />
+            <Icon type='MaterialCommunityIcons' name='at' style={styles.icon} />
+          </Item>
+          <FormControlError value={formValidation.email} />
+        </View>
+        <View>
+          <Item style={styles.item} error={!!formValidation.password}>
+            <Input
+              placeholder='Password'
+              secureTextEntry={!showPassword}
+              onChange={(e) => onChangeFromInput(e, 'password')}
+            />
+            <Icon
+              type='MaterialCommunityIcons'
+              name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+              style={styles.icon}
+              onPress={() => setShowPassword(!showPassword)}
+            />
+          </Item>
+          <FormControlError value={formValidation.password} />
+        </View>
+        <Button style={styles.button} block={true} onPress={onSubmitForm}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </Button>
+        <Text style={styles.textAccount}>
+          {"Don't have an account? "}
+          <Text
+            style={styles.buttonAccount}
+            onPress={() => navigation.navigate(Route.AccountStack.signup)}
+          >
+            Sign Up
+          </Text>
         </Text>
-      </Text>
+        <Text style={styles.textAccount}>
+          <Text style={styles.buttonAccount} onPress={() => console.log('Forgot password')}>
+            Forgot password?
+          </Text>
+        </Text>
+      </View>
+      <View>
+        <Divider style={styles.divider} />
+        <Text>Social Login</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  item: {
-    width: '100%',
-    marginTop: 20,
-  },
-  button: {
-    backgroundColor: Theme.color.green,
-    marginTop: 30,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  icon: {
-    color: '#c1c1c1',
-  },
-  textAccount: {
-    marginTop: 15,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  buttonAccount: {
-    color: Theme.color.green,
-    fontWeight: 'bold',
+  ...AuthStyles,
+  divider: {
+    borderBottomColor: Theme.color.green,
+    width: '80%',
+    margin: 40,
   },
 });

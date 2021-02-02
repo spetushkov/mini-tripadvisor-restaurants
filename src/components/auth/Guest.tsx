@@ -1,15 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
-import { Button, Icon } from 'native-base';
+import { Button, Icon, View } from 'native-base';
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import { Route } from '../../router/Route';
 import { Theme } from '../../theme/Theme';
+import { AuthStyles } from './AuthStyles';
 
 export const Guest = (): JSX.Element => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView centerContent={true} style={styles.view}>
+    <View style={styles.view}>
       <Icon type='FontAwesome5' name='user' style={styles.icon} />
       <Text style={styles.title}>Check your profile</Text>
       <Text style={styles.description}>
@@ -23,14 +24,16 @@ export const Guest = (): JSX.Element => {
       >
         <Text style={styles.buttonText}>View your profile</Text>
       </Button>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  ...AuthStyles,
   view: {
-    marginLeft: 30,
-    marginRight: 30,
+    marginTop: 40,
+    marginLeft: 40,
+    marginRight: 40,
   },
   icon: {
     marginBottom: 40,
@@ -47,13 +50,5 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'center',
     marginBottom: 20,
-  },
-  button: {
-    backgroundColor: Theme.color.green,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });

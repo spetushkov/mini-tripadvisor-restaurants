@@ -7,7 +7,7 @@ type Props = {
   style?: NamedStyles;
 };
 
-export const MyDivider = (props: Props): JSX.Element => {
+export const Divider = (props: Props): JSX.Element => {
   const { style } = props;
 
   return (

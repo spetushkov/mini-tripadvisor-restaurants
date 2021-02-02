@@ -12,11 +12,11 @@ export const FormControlError = (props: Props): JSX.Element | null => {
     return null;
   }
 
-  return <Text style={styles.itemError}>{value}</Text>;
+  return <Text style={styles.text}>{value}</Text>;
 };
 
 const styles = StyleSheet.create({
-  itemError: {
+  text: {
     color: 'red',
     fontSize: 14,
     marginTop: 10,

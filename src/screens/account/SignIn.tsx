@@ -1,44 +1,20 @@
-import React, { useRef } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import Toast from 'react-native-easy-toast';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { AuthForm } from '../../components/auth/AuthForm';
 import { SignInForm } from '../../components/auth/SignInForm';
-import { MyDivider } from '../../components/utility/content/Divider';
-import { Theme } from '../../theme/Theme';
+import { ScreenStyles } from '../ScreenStyles';
 
 export const SignIn = (): JSX.Element => {
-  const toastRef = useRef<Toast>(null);
-
   return (
-    <KeyboardAwareScrollView>
-      <Image
-        source={require('../../assets/img/logo.png')}
-        resizeMode='contain'
-        style={styles.image}
-      />
-      <View style={styles.view}>
-        <SignInForm toastRef={toastRef} />
-      </View>
-      <MyDivider style={styles.divider} />
-      <Text>Social Login</Text>
-      <Toast ref={toastRef} position='top' opacity={0.9} />
-    </KeyboardAwareScrollView>
+    <ScrollView style={styles.container}>
+      <AuthForm>
+        <SignInForm />
+      </AuthForm>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: 200,
-    marginTop: 20,
-  },
-  view: {
-    marginLeft: 40,
-    marginRight: 40,
-  },
-  divider: {
-    borderBottomColor: Theme.color.green,
-    width: '80%',
-    margin: 40,
-  },
+  ...ScreenStyles,
 });

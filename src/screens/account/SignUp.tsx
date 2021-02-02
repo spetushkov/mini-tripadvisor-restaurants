@@ -1,35 +1,20 @@
-import React, { useRef } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
-import Toast from 'react-native-easy-toast';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { AuthForm } from '../../components/auth/AuthForm';
 import { SignUpForm } from '../../components/auth/SignUpForm';
+import { ScreenStyles } from '../ScreenStyles';
 
 export const SignUp = (): JSX.Element => {
-  const toastRef = useRef<Toast>(null);
-
   return (
-    <KeyboardAwareScrollView>
-      <Image
-        source={require('../../assets/img/logo.png')}
-        resizeMode='contain'
-        style={styles.image}
-      />
-      <View style={styles.view}>
-        <SignUpForm toastRef={toastRef} />
-      </View>
-      <Toast ref={toastRef} position='top' opacity={0.9} />
-    </KeyboardAwareScrollView>
+    <ScrollView style={styles.container}>
+      <AuthForm>
+        <SignUpForm />
+      </AuthForm>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  image: {
-    width: '100%',
-    height: 200,
-    marginTop: 20,
-  },
-  view: {
-    marginLeft: 40,
-    marginRight: 40,
-  },
+  ...ScreenStyles,
 });

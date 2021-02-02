@@ -1,32 +1,26 @@
-import firebase from 'firebase';
 import { Button } from 'native-base';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Theme } from '../../theme/Theme';
-import { Loader } from '../utility/loader/Loader';
+import { useFirebase } from '../../firebase/useFirebase';
+import { useApp } from '../app/useApp';
+import { AuthStyles } from './AuthStyles';
 
 export const Authenticated = (): JSX.Element => {
-  const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('');
+  const { signOut } = useFirebase();
+  const { showToast } = useApp();
 
-  const signOutHandler = async () => {
+  const onSignOut = async () => {
     try {
-      setLoading(true);
-      setLoadingText('Signing out...');
-      await firebase.auth().signOut();
-      setLoading(false);
+      await signOut();
     } catch (error) {
-      console.log(error.message);
-      setLoading(false);
+      showToast(error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Loader isVisible={loading} text={loadingText} />
-      <View style={styles.content}>
-        <Text style={styles.text}>UserLogged</Text>
-        <Button style={styles.button} block={true} onPress={signOutHandler}>
+      <View style={styles.view}>
+        <Button style={styles.button} block={true} onPress={onSignOut}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </Button>
       </View>
@@ -35,10 +29,11 @@ export const Authenticated = (): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
+  ...AuthStyles,
   container: {
     flex: 1,
   },
-  content: {
+  view: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -46,14 +41,5 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: '600',
-  },
-  button: {
-    backgroundColor: Theme.color.green,
-    marginTop: 30,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });

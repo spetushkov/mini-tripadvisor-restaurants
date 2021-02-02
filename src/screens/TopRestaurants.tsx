@@ -1,30 +1,20 @@
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScreenStyles } from './ScreenStyles';
 
 type Props = DrawerContentComponentProps;
 
 export const TopRestaurants = (props: Props): JSX.Element => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.text}>Top Restaurants</Text>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: '600',
-  },
+  ...ScreenStyles,
 });

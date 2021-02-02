@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import firebase from 'firebase';
 import { Button, Icon, Input, Item } from 'native-base';
 import React, { useState } from 'react';
 import {
@@ -9,17 +8,16 @@ import {
   TextInputChangeEventData,
   View,
 } from 'react-native';
-import Toast from 'react-native-easy-toast';
 import validate from 'validate.js';
+import { useFirebase } from '../../firebase/useFirebase';
 import { Route } from '../../router/Route';
-import { Theme } from '../../theme/Theme';
 import { ObjectUtils } from '../../utils/ObjectUtils';
+import { useApp } from '../app/useApp';
+import { FormConstraints } from '../utility/form/FormConstraints';
 import { FormControlError } from '../utility/form/FormControlError';
+import { FormValidationState } from '../utility/form/FormValidationState';
 import { Loader } from '../utility/loader/Loader';
-
-type Props = {
-  toastRef: React.RefObject<Toast>;
-};
+import { AuthStyles } from './AuthStyles';
 
 type FormState = {
   email: string;
@@ -27,11 +25,13 @@ type FormState = {
   confirmPassword: string;
 };
 
-type FormConstraints = Partial<Record<keyof FormState, Object>>;
+const initialFormState: FormState = {
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
-type FormValidationState = Partial<Record<keyof FormState, string[]>>;
-
-const formConstraints: FormConstraints = {
+const formConstraints: FormConstraints<FormState> = {
   email: {
     email: {
       message: '^a valid email format required',
@@ -52,27 +52,19 @@ const formConstraints: FormConstraints = {
   },
 };
 
-const initialFormState: FormState = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
+const initialFormValidationState: FormValidationState<FormState> = {};
 
-const initialFormValidationState: FormValidationState = {};
-
-export const SignUpForm = (props: Props): JSX.Element => {
-  const { toastRef } = props;
+export const SignUpForm = (): JSX.Element => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
-  const [form, setForm] = useState<FormState>(initialFormState);
-  const [formValidation, setFormValidation] = useState<FormValidationState>(
-    initialFormValidationState,
-  );
+  const [form, setForm] = useState(initialFormState);
+  const [formValidation, setFormValidation] = useState(initialFormValidationState);
   const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('');
+  const { signUp, isAuthenticated } = useFirebase();
+  const { showToast } = useApp();
 
-  const submitHandler = async () => {
+  const onSubmitForm = async () => {
     const formValidation = validateForm();
     if (formValidation && !ObjectUtils.isEmpty(formValidation)) {
       setFormValidation(formValidation);
@@ -85,19 +77,20 @@ export const SignUpForm = (props: Props): JSX.Element => {
 
     try {
       setLoading(true);
-      setLoadingText('Signing up...');
-      await firebase.auth().createUserWithEmailAndPassword(form.email, form.password);
-      navigation.navigate(Route.BottomTab.account);
+      const result = await signUp(form.email, form.password);
       setLoading(false);
+      if (result) {
+        navigation.navigate(Route.AccountStack.account);
+      }
     } catch (error) {
-      toastRef.current?.show(error.message);
       setLoading(false);
+      showToast(error.message);
     }
   };
 
-  const validateForm = (): FormValidationState => {
+  const validateForm = (): FormValidationState<FormState> => {
     setFormValidation(initialFormValidationState);
-    let formValidation: FormValidationState = validate({ ...form }, formConstraints);
+    let formValidation: FormValidationState<FormState> = validate({ ...form }, formConstraints);
 
     if (!formValidation) {
       formValidation = {};
@@ -128,7 +121,7 @@ export const SignUpForm = (props: Props): JSX.Element => {
     return formValidation;
   };
 
-  const changeInputHandler = (
+  const onChangeFromInput = (
     e: NativeSyntheticEvent<TextInputChangeEventData>,
     inputName: keyof FormState,
   ) => {
@@ -139,13 +132,13 @@ export const SignUpForm = (props: Props): JSX.Element => {
   };
 
   return (
-    <View style={styles.container}>
-      <Loader isVisible={loading} text={loadingText} />
+    <View style={styles.emailPasswordAuth}>
+      <Loader isVisible={loading} />
       <View>
         <Item style={styles.item} error={!!formValidation.email}>
           <Input
             placeholder='Email'
-            onChange={(e) => changeInputHandler(e, 'email')}
+            onChange={(e) => onChangeFromInput(e, 'email')}
             autoCapitalize='none'
           />
           <Icon type='MaterialCommunityIcons' name='at' style={styles.icon} />
@@ -157,7 +150,7 @@ export const SignUpForm = (props: Props): JSX.Element => {
           <Input
             placeholder='Password'
             secureTextEntry={!showPassword}
-            onChange={(e) => changeInputHandler(e, 'password')}
+            onChange={(e) => onChangeFromInput(e, 'password')}
           />
           <Icon
             type='MaterialCommunityIcons'
@@ -173,7 +166,7 @@ export const SignUpForm = (props: Props): JSX.Element => {
           <Input
             placeholder='Confirm password'
             secureTextEntry={!showRepeatPassword}
-            onChange={(e) => changeInputHandler(e, 'confirmPassword')}
+            onChange={(e) => onChangeFromInput(e, 'confirmPassword')}
           />
           <Icon
             type='MaterialCommunityIcons'
@@ -184,11 +177,21 @@ export const SignUpForm = (props: Props): JSX.Element => {
         </Item>
         <FormControlError value={formValidation.confirmPassword} />
       </View>
-      <Button style={styles.button} block={true} onPress={submitHandler}>
+      <Text style={styles.textAccount}>
+        {'By signing up, you agree to our '}
+        <Text style={styles.buttonAccount} onPress={() => console.log('agreement')}>
+          Terms of Service
+        </Text>
+        {' and '}
+        <Text style={styles.buttonAccount} onPress={() => console.log('agreement')}>
+          Privacy Policy
+        </Text>
+      </Text>
+      <Button style={styles.button} block={true} onPress={onSubmitForm}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </Button>
       <Text style={styles.textAccount}>
-        Already have an account?{' '}
+        {'Already have an account? '}
         <Text
           style={styles.buttonAccount}
           onPress={() => navigation.navigate(Route.AccountStack.signin)}
@@ -201,35 +204,5 @@ export const SignUpForm = (props: Props): JSX.Element => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  item: {
-    width: '100%',
-    marginTop: 20,
-  },
-  button: {
-    backgroundColor: Theme.color.green,
-    marginTop: 30,
-  },
-  buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  icon: {
-    color: '#c1c1c1',
-  },
-  textAccount: {
-    marginTop: 15,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  buttonAccount: {
-    color: Theme.color.green,
-    fontWeight: 'bold',
-  },
+  ...AuthStyles,
 });
