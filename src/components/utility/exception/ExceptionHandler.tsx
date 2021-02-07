@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Theme } from '../../../theme/Theme';
 
 type Props = {
   children: React.ReactNode;
@@ -52,13 +53,13 @@ const styles = StyleSheet.create({
     marginTop: '50%',
   },
   title: {
+    marginVertical: 10,
     fontFamily: 'open-sans-bold',
     fontSize: 20,
-    color: 'grey',
-    marginVertical: 10,
+    color: Theme.color.grey,
   },
   message: {
     fontFamily: 'open-sans',
-    color: 'grey',
+    color: Theme.color.grey,
   },
 });

@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   view: {
-    marginLeft: 40,
-    marginRight: 40,
+    marginHorizontal: 40,
   },
 });

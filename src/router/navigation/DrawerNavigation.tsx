@@ -11,6 +11,7 @@ import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Account } from '../../screens/account/Account';
 import { Favorites } from '../../screens/Favorites';
 import { Restaurants } from '../../screens/Restaurants';
+import { Theme } from '../../theme/Theme';
 
 type Props = DrawerContentComponentProps;
 
@@ -45,15 +46,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   drawerHeader: {
-    backgroundColor: '#03cafc',
-    height: 150,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    height: 150,
+    backgroundColor: Theme.color.blue,
   },
   drawerHeaderText: {
-    color: 'white',
+    color: Theme.color.white,
     fontSize: 24,
     fontWeight: 'bold',
   },

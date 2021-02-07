@@ -6,7 +6,7 @@ export const AuthStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 20,
   },
   item: {
     width: '100%',
@@ -16,18 +16,20 @@ export const AuthStyles = StyleSheet.create({
     backgroundColor: Theme.color.green,
     marginTop: 30,
   },
+  buttonDisabled: {
+    backgroundColor: Theme.color.greenDisabled,
+  },
   buttonText: {
-    color: '#fff',
+    color: Theme.color.white,
     fontWeight: 'bold',
     fontSize: 16,
   },
   icon: {
-    color: '#c1c1c1',
+    color: Theme.color.greyLight,
   },
   textAccount: {
     marginTop: 15,
-    marginLeft: 10,
-    marginRight: 10,
+    marginHorizontal: 10,
   },
   buttonAccount: {
     color: Theme.color.green,

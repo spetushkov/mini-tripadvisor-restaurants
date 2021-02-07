@@ -1,13 +1,13 @@
 import { Button } from 'native-base';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useFirebase } from '../../firebase/useFirebase';
-import { useApp } from '../app/useApp';
-import { AuthStyles } from './AuthStyles';
+import { useFirebase } from '../../../firebase/useFirebase';
+import { useToast } from '../../app/useToast';
+import { AuthStyles } from '../AuthStyles';
 
 export const Authenticated = (): JSX.Element => {
   const { signOut } = useFirebase();
-  const { showToast } = useApp();
+  const { showToast } = useToast();
 
   const onSignOut = async () => {
     try {
@@ -37,9 +37,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: '600',
   },
 });

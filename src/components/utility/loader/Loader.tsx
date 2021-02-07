@@ -12,13 +12,9 @@ export const Loader = (props: Props): JSX.Element => {
   const { isVisible, text } = props;
 
   return (
-    <Overlay
-      isVisible={isVisible}
-      backdropStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
-      overlayStyle={styles.overlay}
-    >
+    <Overlay isVisible={isVisible} overlayStyle={styles.overlay}>
       <View style={styles.view}>
-        <ActivityIndicator size='large' color={Theme.color.green} />
+        <ActivityIndicator size='large' color={Theme.color.black} />
         {text && <Text style={styles.text}>{text}</Text>}
       </View>
     </Overlay>
@@ -29,10 +25,7 @@ const styles = StyleSheet.create({
   overlay: {
     height: 100,
     width: 200,
-    backgroundColor: '#fff',
-    borderColor: Theme.color.green,
-    borderWidth: 2,
-    borderRadius: 10,
+    backgroundColor: 'transparent',
   },
   view: {
     flex: 1,
@@ -40,8 +33,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: Theme.color.green,
-    textTransform: 'uppercase',
+    color: Theme.color.black,
     marginTop: 10,
   },
 });
