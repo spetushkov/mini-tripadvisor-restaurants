@@ -55,7 +55,6 @@ export const SignInForm = (): JSX.Element | null => {
             <FormItem
               {...getFormItemProps(form, 'email')}
               icon='at'
-              instantFeedback={true}
               placeholder='Email'
               autoCapitalize='none'
             />
@@ -63,7 +62,6 @@ export const SignInForm = (): JSX.Element | null => {
               {...getFormItemProps(form, 'password')}
               icon={showPassword ? 'eye-off-outline' : 'eye-outline'}
               onIconPress={() => setShowPassword(!showPassword)}
-              instantFeedback={true}
               placeholder='Password'
               secureTextEntry={!showPassword}
             />
