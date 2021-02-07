@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Formik, FormikErrors, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { Form, Text, View } from 'native-base';
 import React, { useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -10,7 +10,7 @@ import { useToast } from '../../app/useToast';
 import { Divider } from '../../utility/content/Divider';
 import { FormButton } from '../../utility/form/FormButton';
 import { FormItem } from '../../utility/form/FormItem';
-import { FormUtils } from '../../utility/form/FormUtils';
+import { getFormItemProps, getFormState, validateForm } from '../../utility/form/FormUtils';
 import { AuthStyles } from '../AuthStyles';
 import { SignInFormEntity } from './SignInFormEntity';
 
@@ -23,26 +23,11 @@ export const SignInForm = (): JSX.Element | null => {
 
   const initialFormState = useMemo(() => new SignInFormEntity(), []);
 
-  const onValidateForm = async (
-    values: SignInFormEntity,
-  ): Promise<FormikErrors<SignInFormEntity>> => {
-    try {
-      const result = await FormUtils.validate(values, SignInFormEntity);
-      return Promise.resolve(result);
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  };
-
-  const isFormSubmittable = (): boolean => {
-    return !loading;
-  };
-
   const onSubmitForm = async (
     values: SignInFormEntity,
     FormActions: FormikHelpers<SignInFormEntity>,
   ): Promise<void> => {
-    const form = FormUtils.getState(values, SignInFormEntity);
+    const form = getFormState(values, SignInFormEntity);
     try {
       setLoading(true);
       const result = await signIn(form.email, form.password);
@@ -60,22 +45,22 @@ export const SignInForm = (): JSX.Element | null => {
 
   return (
     <View>
-      <Formik initialValues={initialFormState} validate={onValidateForm} onSubmit={onSubmitForm}>
+      <Formik
+        initialValues={initialFormState}
+        validate={(values) => validateForm(values, SignInFormEntity)}
+        onSubmit={onSubmitForm}
+      >
         {(form) => (
           <Form style={styles.emailPasswordAuth}>
             <FormItem
-              value={form.values['email']}
-              meta={form.getFieldMeta('email')}
-              onChangeText={form.handleChange('email')}
+              {...getFormItemProps(form, 'email')}
               icon='at'
               instantFeedback={true}
               placeholder='Email'
               autoCapitalize='none'
             />
             <FormItem
-              value={form.values['password']}
-              meta={form.getFieldMeta('password')}
-              onChangeText={form.handleChange('password')}
+              {...getFormItemProps(form, 'password')}
               icon={showPassword ? 'eye-off-outline' : 'eye-outline'}
               onIconPress={() => setShowPassword(!showPassword)}
               instantFeedback={true}
@@ -87,7 +72,7 @@ export const SignInForm = (): JSX.Element | null => {
               onPress={form.handleSubmit}
               style={styles.button}
               loading={loading}
-              disabled={!isFormSubmittable()}
+              disabled={loading}
               disabledStyle={styles.buttonDisabled}
             />
             <Text style={styles.textAccount}>

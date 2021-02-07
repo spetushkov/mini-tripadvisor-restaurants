@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Formik, FormikErrors, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import { Form, Text } from 'native-base';
 import React, { useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -8,7 +8,7 @@ import { Route } from '../../../router/Route';
 import { useToast } from '../../app/useToast';
 import { FormButton } from '../../utility/form/FormButton';
 import { FormItem } from '../../utility/form/FormItem';
-import { FormUtils } from '../../utility/form/FormUtils';
+import { getFormItemProps, getFormState, validateForm } from '../../utility/form/FormUtils';
 import { AuthStyles } from '../AuthStyles';
 import { SignUpFormEntity } from './SignUpFormEntity';
 
@@ -22,26 +22,11 @@ export const SignUpForm = (): JSX.Element => {
 
   const initialFormState = useMemo(() => new SignUpFormEntity(), []);
 
-  const onValidateForm = async (
-    values: SignUpFormEntity,
-  ): Promise<FormikErrors<SignUpFormEntity>> => {
-    try {
-      const result = await FormUtils.validate(values, SignUpFormEntity);
-      return Promise.resolve(result);
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  };
-
-  const isFormSubmittable = (): boolean => {
-    return !loading;
-  };
-
   const onSubmitForm = async (
     values: SignUpFormEntity,
     FormActions: FormikHelpers<SignUpFormEntity>,
   ): Promise<void> => {
-    const form = FormUtils.getState(values, SignUpFormEntity);
+    const form = getFormState(values, SignUpFormEntity);
     try {
       setLoading(true);
       const result = await signUp(form.email, form.password);
@@ -58,22 +43,22 @@ export const SignUpForm = (): JSX.Element => {
   };
 
   return (
-    <Formik initialValues={initialFormState} validate={onValidateForm} onSubmit={onSubmitForm}>
+    <Formik
+      initialValues={initialFormState}
+      validate={(values) => validateForm(values, SignUpFormEntity)}
+      onSubmit={onSubmitForm}
+    >
       {(form) => (
         <Form style={styles.emailPasswordAuth}>
           <FormItem
-            value={form.values['email']}
-            meta={form.getFieldMeta('email')}
-            onChangeText={form.handleChange('email')}
+            {...getFormItemProps(form, 'email')}
             icon='at'
             instantFeedback={true}
             placeholder='Email'
             autoCapitalize='none'
           />
           <FormItem
-            value={form.values['password']}
-            meta={form.getFieldMeta('password')}
-            onChangeText={form.handleChange('password')}
+            {...getFormItemProps(form, 'password')}
             icon={showPassword ? 'eye-off-outline' : 'eye-outline'}
             onIconPress={() => setShowPassword(!showPassword)}
             instantFeedback={true}
@@ -81,9 +66,7 @@ export const SignUpForm = (): JSX.Element => {
             secureTextEntry={!showPassword}
           />
           <FormItem
-            value={form.values['confirmPassword']}
-            meta={form.getFieldMeta('confirmPassword')}
-            onChangeText={form.handleChange('confirmPassword')}
+            {...getFormItemProps(form, 'confirmPassword')}
             icon={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
             onIconPress={() => setShowConfirmPassword(!showConfirmPassword)}
             instantFeedback={true}
@@ -105,7 +88,7 @@ export const SignUpForm = (): JSX.Element => {
             onPress={form.handleSubmit}
             style={styles.button}
             loading={loading}
-            disabled={!isFormSubmittable()}
+            disabled={loading}
             disabledStyle={styles.buttonDisabled}
           />
           <Text style={styles.textAccount}>

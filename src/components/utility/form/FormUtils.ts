@@ -1,14 +1,25 @@
-import { FormikErrors, FormikProps } from 'formik';
+import { FieldMetaProps, FormikErrors, FormikProps } from 'formik';
 import { ClassTransformer, Clazz } from '../../../class/ClassTransformer';
 import { ClassValidator } from '../../../class/ClassValidator';
 
-const getState = <T>(values: T, entityClass: Clazz<T>): T => {
+type FormItemProps<T> = {
+  value: T[keyof T];
+  meta: FieldMetaProps<unknown>;
+  onChangeText: keyof T extends React.ChangeEvent<any>
+    ? void
+    : (e: string | React.ChangeEvent<any>) => void;
+};
+
+export const getFormState = <T>(values: T, entityClass: Clazz<T>): T => {
   return ClassTransformer.fromPlain(entityClass, values);
 };
 
-const validate = async <T>(values: T, entityClass: Clazz<T>): Promise<FormikErrors<T>> => {
+export const validateForm = async <T>(
+  values: T,
+  entityClass: Clazz<T>,
+): Promise<FormikErrors<T>> => {
   try {
-    const formState = getState(values, entityClass);
+    const formState = getFormState(values, entityClass);
     const formErrors = await ClassValidator.validate(formState, false);
     return Promise.resolve(formErrors as FormikErrors<T>);
   } catch (error) {
@@ -16,12 +27,17 @@ const validate = async <T>(values: T, entityClass: Clazz<T>): Promise<FormikErro
   }
 };
 
-const isSubmittable = <T>(form: FormikProps<T>): boolean => {
+export const isFormSubmittable = <T>(form: FormikProps<T>): boolean => {
   return !form.isValidating && !form.isSubmitting && form.dirty && form.isValid;
 };
 
-export const FormUtils = {
-  getState,
-  validate,
-  isSubmittable,
+export const getFormItemProps = <T>(
+  form: FormikProps<T>,
+  itemName: keyof typeof form.values,
+): FormItemProps<T> => {
+  return {
+    value: form.values[itemName],
+    meta: form.getFieldMeta(itemName as string),
+    onChangeText: form.handleChange(itemName),
+  };
 };
