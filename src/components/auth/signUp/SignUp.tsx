@@ -12,7 +12,7 @@ import { getFormItemProps, getFormState, validateForm } from '../../utility/form
 import { AuthStyles } from '../AuthStyles';
 import { SignUpFormEntity } from './SignUpFormEntity';
 
-export const SignUpForm = (): JSX.Element => {
+export const SignUp = (): JSX.Element => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -31,15 +31,16 @@ export const SignUpForm = (): JSX.Element => {
       setLoading(true);
       const result = await signUp(form.email, form.password);
       setLoading(false);
+      FormActions.setSubmitting(false);
+
       if (result) {
         navigation.navigate(Route.AccountStack.account);
       }
     } catch (error) {
       setLoading(false);
+      FormActions.setSubmitting(false);
       showToast(error.message);
     }
-
-    FormActions.setSubmitting(false);
   };
 
   return (

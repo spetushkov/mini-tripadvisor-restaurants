@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Search } from '../../screens/Search';
+import { SearchScreen } from '../../screens/SearchScreen';
 import { Route } from '../Route';
 
 const Stack = createStackNavigator();
@@ -10,7 +10,7 @@ const StackNavigator = (): JSX.Element => {
     <Stack.Navigator>
       <Stack.Screen
         name={Route.SearchStack.search}
-        component={Search}
+        component={SearchScreen}
         options={{
           title: 'Search',
         }}

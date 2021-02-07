@@ -14,7 +14,7 @@ import { getFormItemProps, getFormState, validateForm } from '../../utility/form
 import { AuthStyles } from '../AuthStyles';
 import { SignInFormEntity } from './SignInFormEntity';
 
-export const SignInForm = (): JSX.Element | null => {
+export const SignIn = (): JSX.Element | null => {
   const navigation = useNavigation();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,15 +32,16 @@ export const SignInForm = (): JSX.Element | null => {
       setLoading(true);
       const result = await signIn(form.email, form.password);
       setLoading(false);
+      FormActions.setSubmitting(false);
+
       if (result) {
         navigation.navigate(Route.AccountStack.account);
       }
     } catch (error) {
       setLoading(false);
+      FormActions.setSubmitting(false);
       showToast(error.message);
     }
-
-    FormActions.setSubmitting(false);
   };
 
   return (

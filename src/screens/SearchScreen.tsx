@@ -5,11 +5,11 @@ import { ScreenStyles } from './ScreenStyles';
 
 type Props = DrawerContentComponentProps;
 
-export const Favorites = (props: Props): JSX.Element => {
+export const SearchScreen = (props: Props): JSX.Element => {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView>
       <View style={styles.content}>
-        <Text style={styles.text}>Favorites</Text>
+        <Text style={styles.text}>Search</Text>
       </View>
     </ScrollView>
   );

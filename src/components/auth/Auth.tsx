@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const AuthForm = ({ children }: Props): JSX.Element => {
+export const Auth = ({ children }: Props): JSX.Element => {
   return (
     <KeyboardAwareScrollView>
       <Image

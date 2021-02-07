@@ -8,9 +8,9 @@ import {
 } from '@react-navigation/drawer';
 import React from 'react';
 import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Account } from '../../screens/account/Account';
-import { Favorites } from '../../screens/Favorites';
-import { Restaurants } from '../../screens/Restaurants';
+import { AccountScreen } from '../../screens/account/AccountScreen';
+import { FavoritesScreen } from '../../screens/FavoritesScreen';
+import { RestaurantsScreen } from '../../screens/RestaurantsScreen';
 import { Theme } from '../../theme/Theme';
 
 type Props = DrawerContentComponentProps;
@@ -68,9 +68,9 @@ const DrawerNavigator = (): JSX.Element => {
       backBehavior='history'
       drawerContent={(props) => <DrawerContent {...props} />}
     >
-      <Drawer.Screen name='Restaurants' component={Restaurants} />
-      <Drawer.Screen name='Favorites' component={Favorites} />
-      <Drawer.Screen name='Account' component={Account} />
+      <Drawer.Screen name='Restaurants' component={RestaurantsScreen} />
+      <Drawer.Screen name='Favorites' component={FavoritesScreen} />
+      <Drawer.Screen name='Account' component={AccountScreen} />
     </Drawer.Navigator>
   );
 };
