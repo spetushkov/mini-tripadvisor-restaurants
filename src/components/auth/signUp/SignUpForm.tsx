@@ -53,7 +53,6 @@ export const SignUpForm = (): JSX.Element => {
           <FormItem
             {...getFormItemProps(form, 'email')}
             icon='at'
-            instantFeedback={true}
             placeholder='Email'
             autoCapitalize='none'
           />
@@ -61,7 +60,6 @@ export const SignUpForm = (): JSX.Element => {
             {...getFormItemProps(form, 'password')}
             icon={showPassword ? 'eye-off-outline' : 'eye-outline'}
             onIconPress={() => setShowPassword(!showPassword)}
-            instantFeedback={true}
             placeholder='Password'
             secureTextEntry={!showPassword}
           />
@@ -69,7 +67,6 @@ export const SignUpForm = (): JSX.Element => {
             {...getFormItemProps(form, 'confirmPassword')}
             icon={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
             onIconPress={() => setShowConfirmPassword(!showConfirmPassword)}
-            instantFeedback={true}
             placeholder='Confirm password'
             secureTextEntry={!showConfirmPassword}
           />
