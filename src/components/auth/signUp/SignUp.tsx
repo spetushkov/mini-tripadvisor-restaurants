@@ -34,7 +34,7 @@ export const SignUp = (): JSX.Element => {
       FormActions.setSubmitting(false);
 
       if (result) {
-        navigation.navigate(Route.AccountStack.account);
+        navigation.reset({ index: 0, routes: [{ name: Route.AccountStack.account }] });
       }
     } catch (error) {
       setLoading(false);

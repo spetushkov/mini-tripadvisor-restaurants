@@ -1,11 +1,11 @@
 import { Button } from 'native-base';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { useFirebase } from '../../../firebase/useFirebase';
-import { useToast } from '../../app/useToast';
-import { AuthStyles } from '../AuthStyles';
+import { useFirebase } from '../../firebase/useFirebase';
+import { useToast } from '../app/useToast';
+import { AuthStyles } from './AuthStyles';
 
-export const Authenticated = (): JSX.Element => {
+export const Account = (): JSX.Element => {
   const { signOut } = useFirebase();
   const { showToast } = useToast();
 

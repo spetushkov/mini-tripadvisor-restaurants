@@ -1,16 +1,28 @@
-import React from 'react';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { Authenticated } from '../../components/auth/account/Authenticated';
-import { Guest } from '../../components/auth/account/Guest';
-import { Loader } from '../../components/utility/loader/Loader';
+import { Account } from '../../components/auth/Account';
 import { useFirebase } from '../../firebase/useFirebase';
+import { Route } from '../../router/Route';
 
-export const AccountScreen = (): JSX.Element => {
-  const { isAuthenticated, waitingAuthStateChange } = useFirebase();
+export const AccountScreen = (): JSX.Element | null => {
+  const navigation = useNavigation();
+  const { isAuthenticated, waitingAuthentication } = useFirebase();
+  const isFocused = useIsFocused();
 
-  if (waitingAuthStateChange) {
-    return <Loader isVisible={true} />;
+  useEffect(() => {
+    if (isFocused && !waitingAuthentication && !isAuthenticated) {
+      navigation.reset({ index: 0, routes: [{ name: Route.AccountStack.signin }] });
+    }
+  }, [isFocused, waitingAuthentication, isAuthenticated, navigation]);
+
+  if (waitingAuthentication || (isFocused && !isAuthenticated)) {
+    return null;
   }
 
-  return <ScrollView>{isAuthenticated ? <Authenticated /> : <Guest />}</ScrollView>;
+  return (
+    <ScrollView>
+      <Account />
+    </ScrollView>
+  );
 };

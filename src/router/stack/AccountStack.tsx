@@ -22,6 +22,7 @@ const StackNavigator = (): JSX.Element => {
         component={SignInScreen}
         options={{
           title: 'Sign In',
+          headerLeft: () => undefined,
         }}
       />
       <Stack.Screen

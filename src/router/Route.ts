@@ -8,7 +8,6 @@ export const BottomTab = {
 
 const AccountStack = {
   account: 'account',
-  authenticated: 'authenticated',
   signin: 'signin',
   signup: 'signup',
 };
