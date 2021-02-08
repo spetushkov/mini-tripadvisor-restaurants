@@ -1,5 +1,7 @@
+import * as Facebook from 'expo-facebook';
 import firebase from 'firebase';
 import React, { createContext, useEffect, useMemo, useState } from 'react';
+import { FacebookConfig } from '../facebook/FacebookConfig';
 import { App, FirebaseApi, User, UserCredential } from './FirebaseApi';
 import { FirebaseConfig } from './FirebaseConfig';
 
@@ -14,6 +16,7 @@ export type FirebaseContext = {
   waitingAuthentication: boolean;
   signUp: (email: string, password: string) => Promise<UserCredential>;
   signIn: (email: string, password: string) => Promise<UserCredential>;
+  signInWithFacebook: () => Promise<UserCredential | null>;
   signOut: () => Promise<boolean>;
 };
 
@@ -62,6 +65,34 @@ export const Firebase = ({ children }: Props): JSX.Element => {
     }
   };
 
+  const signInWithFacebook = async (): Promise<UserCredential | null> => {
+    try {
+      // setWaitingAuthentication(true);
+
+      const { appId, appName } = FacebookConfig;
+      await Facebook.initializeAsync({ appId, appName });
+
+      const loginResult = await Facebook.logInWithReadPermissionsAsync({
+        permissions: FacebookConfig.permissions,
+      });
+
+      if (loginResult.type === 'cancel') {
+        return Promise.resolve(null);
+      }
+
+      const token = loginResult.type === 'success' && loginResult.token ? loginResult.token : '';
+      if (!token) {
+        return Promise.resolve(null);
+      }
+
+      const response = await FirebaseApi.signInWithFacebook(token);
+      return Promise.resolve(response);
+    } catch (error) {
+      // setWaitingAuthentication(false);
+      return Promise.reject(error);
+    }
+  };
+
   const signOut = async (): Promise<boolean> => {
     try {
       setWaitingAuthentication(true);
@@ -81,6 +112,7 @@ export const Firebase = ({ children }: Props): JSX.Element => {
       waitingAuthentication,
       signUp,
       signIn,
+      signInWithFacebook,
       signOut,
     }),
     [user, isAuthenticated, waitingAuthentication],

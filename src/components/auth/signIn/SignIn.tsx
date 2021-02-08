@@ -13,6 +13,7 @@ import { FormItem } from '../../utility/form/FormItem';
 import { getFormItemProps, getFormState, validateForm } from '../../utility/form/FormUtils';
 import { AuthStyles } from '../AuthStyles';
 import { SignInFormEntity } from './SignInFormEntity';
+import { SignInWithFacebook } from './social/facebook/SignInWithFacebook';
 
 export const SignIn = (): JSX.Element | null => {
   const navigation = useNavigation();
@@ -91,9 +92,9 @@ export const SignIn = (): JSX.Element | null => {
           </Form>
         )}
       </Formik>
+      <Divider style={styles.divider} />
       <View>
-        <Divider style={styles.divider} />
-        <Text>Social Login</Text>
+        <SignInWithFacebook />
       </View>
     </View>
   );
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   ...AuthStyles,
   divider: {
     borderBottomColor: Theme.color.green,
-    width: '80%',
-    margin: 40,
+    width: '100%',
+    margin: 20,
   },
 });
