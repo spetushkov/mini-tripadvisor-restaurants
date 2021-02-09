@@ -1,9 +1,9 @@
 import { User } from 'firebase';
-import { Body, Icon, Left, List, ListItem, Right, Text } from 'native-base';
+import { Body, Icon, Left, List, ListItem, Right, Text, View } from 'native-base';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Theme } from '../../../theme/Theme';
-import { useToast } from '../../utility/toast/useToast';
+import { StyleSheet } from 'react-native';
+import { Theme } from '../../theme/Theme';
+import { useToast } from '../utility/toast/useToast';
 
 type Props = {
   user: User | null;

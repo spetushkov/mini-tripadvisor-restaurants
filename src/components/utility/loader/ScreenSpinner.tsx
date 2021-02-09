@@ -1,6 +1,6 @@
-import { Text } from 'native-base';
+import { Spinner, Text, View } from 'native-base';
 import React from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { Theme } from '../../../theme/Theme';
 
@@ -9,13 +9,13 @@ type Props = {
   text?: string;
 };
 
-export const Loader = (props: Props): JSX.Element => {
+export const ScreenSpinner = (props: Props): JSX.Element => {
   const { visible, text } = props;
 
   return (
     <Overlay isVisible={visible} overlayStyle={styles.overlay}>
       <View style={styles.view}>
-        <ActivityIndicator size='large' color={Theme.color.brandDark} />
+        <Spinner size='large' color={Theme.color.brandDark} />
         {text && <Text style={styles.text}>{text}</Text>}
       </View>
     </Overlay>

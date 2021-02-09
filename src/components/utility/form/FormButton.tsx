@@ -1,6 +1,6 @@
-import { Button, Text, View } from 'native-base';
+import { Button, Spinner, Text, View } from 'native-base';
 import React from 'react';
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Theme } from '../../../theme/Theme';
 import { Style } from '../../../types/Style';
 
@@ -29,11 +29,7 @@ export const FormButton = (props: Props): JSX.Element => {
         </View>
         <View style={styles.activityContainer}>
           {loading && (
-            <ActivityIndicator
-              style={styles.activity}
-              size='small'
-              color={Theme.color.brandLight}
-            />
+            <Spinner style={styles.spinner} size='small' color={Theme.color.brandLight} />
           )}
         </View>
       </View>
@@ -61,7 +57,7 @@ const styles = StyleSheet.create({
   activityContainer: {
     flex: 1,
   },
-  activity: {
+  spinner: {
     alignSelf: 'flex-end',
     marginLeft: 'auto',
     marginRight: 'auto',

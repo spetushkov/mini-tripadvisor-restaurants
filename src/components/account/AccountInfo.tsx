@@ -1,13 +1,13 @@
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { Text } from 'native-base';
+import { Text, View } from 'native-base';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { User } from '../../../firebase/FirebaseAuthApi';
-import { useFirebase } from '../../../firebase/useFirebase';
-import { Loader } from '../../utility/loader/Loader';
-import { useToast } from '../../utility/toast/useToast';
+import { User } from '../../firebase/FirebaseAuthApi';
+import { useFirebase } from '../../firebase/useFirebase';
+import { ScreenSpinner } from '../utility/loader/ScreenSpinner';
+import { useToast } from '../utility/toast/useToast';
 
 type Props = {
   user: User | null;
@@ -66,7 +66,7 @@ export const AccountInfo = (props: Props): JSX.Element | null => {
 
   return (
     <View style={styles.container}>
-      <Loader visible={loading} />
+      <ScreenSpinner visible={loading} />
       <Avatar
         rounded={true}
         size='large'

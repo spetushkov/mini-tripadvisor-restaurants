@@ -1,7 +1,7 @@
+import { View } from 'native-base';
 import React from 'react';
-import { ImageStyle, StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
-
-type NamedStyles = ViewStyle | TextStyle | ImageStyle;
+import { StyleSheet } from 'react-native';
+import { NamedStyles } from '../../../types/NamedStyle';
 
 type Props = {
   style?: NamedStyles;

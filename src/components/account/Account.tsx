@@ -1,10 +1,10 @@
-import { Button, Text } from 'native-base';
+import { Button, Text, View } from 'native-base';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { useFirebase } from '../../../firebase/useFirebase';
-import { Theme } from '../../../theme/Theme';
-import { useToast } from '../../utility/toast/useToast';
-import { AuthStyles } from '../AuthStyles';
+import { StyleSheet } from 'react-native';
+import { useFirebase } from '../../firebase/useFirebase';
+import { Theme } from '../../theme/Theme';
+import { AuthStyles } from '../auth/AuthStyles';
+import { useToast } from '../utility/toast/useToast';
 import { AccountInfo } from './AccountInfo';
 import { AccountOptions } from './AccountOptions';
 

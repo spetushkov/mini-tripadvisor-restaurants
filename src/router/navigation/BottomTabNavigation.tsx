@@ -13,7 +13,7 @@ type TabBarIconProps = { focused: boolean; color: string; size: number };
 
 const screenOptions = (title: string, name: string) => {
   return {
-    title: title,
+    title,
     tabBarIcon: ({ color, size }: TabBarIconProps) => (
       <Icon type='MaterialCommunityIcons' name={name} style={{ fontSize: size, color }} />
     ),

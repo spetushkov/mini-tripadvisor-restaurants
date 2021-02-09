@@ -6,9 +6,9 @@ import {
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { Text } from 'native-base';
+import { Text, View } from 'native-base';
 import React from 'react';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet } from 'react-native';
 import { AccountScreen } from '../../screens/account/AccountScreen';
 import { FavoritesScreen } from '../../screens/FavoritesScreen';
 import { RestaurantsScreen } from '../../screens/RestaurantsScreen';

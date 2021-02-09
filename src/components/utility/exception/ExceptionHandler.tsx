@@ -1,6 +1,6 @@
-import { Text } from 'native-base';
+import { Text, View } from 'native-base';
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Theme } from '../../../theme/Theme';
 
 type Props = {

@@ -6,7 +6,7 @@ import 'reflect-metadata';
 import { Firebase } from '../../firebase/Firebase';
 import { useCustomFonts } from '../../font/useCustomFonts';
 import { Router } from '../../router/Router';
-import { Anatomy } from '../frame/Anatomy';
+import { Anatomy } from '../anatomy/Anatomy';
 import { ExceptionHandler } from '../utility/exception/ExceptionHandler';
 import { AppContext } from './AppContext';
 
