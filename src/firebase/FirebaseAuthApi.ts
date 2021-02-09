@@ -40,9 +40,34 @@ const signOut = async (): Promise<void> => {
   }
 };
 
-export const FirebaseApi = {
+const getCurrentUser = async (): Promise<User | null> => {
+  try {
+    return Promise.resolve(firebase.auth().currentUser);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+const updateCurrentUserProfile = async (payload: Partial<User>): Promise<User | null> => {
+  try {
+    const user = await getCurrentUser();
+    if (!user) {
+      return Promise.resolve(null);
+    }
+
+    await user.updateProfile(payload);
+    const userUpdated = await getCurrentUser();
+    return Promise.resolve(userUpdated);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const FirebaseAuthApi = {
   signUp,
   signIn,
   signInWithFacebook,
   signOut,
+  getCurrentUser,
+  updateCurrentUserProfile,
 };

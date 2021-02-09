@@ -1,5 +1,5 @@
 import { Button, Text } from 'native-base';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useFirebase } from '../../firebase/useFirebase';
 import { Theme } from '../../theme/Theme';
@@ -10,8 +10,6 @@ import { AuthStyles } from './AuthStyles';
 export const Account = (): JSX.Element => {
   const { user, signOut } = useFirebase();
   const { showToast } = useToast();
-  const [loading, setLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('');
 
   const onSignOut = async () => {
     try {

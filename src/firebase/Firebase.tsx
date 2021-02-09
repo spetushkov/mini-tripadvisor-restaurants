@@ -2,8 +2,9 @@ import * as Facebook from 'expo-facebook';
 import * as firebase from 'firebase';
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 import { FacebookConfig, init as facebookInit } from '../facebook/FacebookConfig';
-import { App, FirebaseApi, User, UserCredential } from './FirebaseApi';
+import { App, FirebaseAuthApi, User, UserCredential } from './FirebaseAuthApi';
 import { init as firebaseInit } from './FirebaseConfig';
+import { FirebaseStorageApi, UploadTask } from './FirebaseStorageApi';
 
 type Props = {
   children: React.ReactNode;
@@ -18,6 +19,9 @@ export type FirebaseContext = {
   signIn: (email: string, password: string) => Promise<UserCredential>;
   signInWithFacebook: () => Promise<UserCredential | null>;
   signOut: () => Promise<boolean>;
+  uploadImage: (uri: string, imageId: string) => Promise<UploadTask>;
+  getImageDownloadUrl: (imageId: string) => Promise<string>;
+  updateCurrentUserProfile: (payload: Partial<User>) => Promise<void>;
 };
 
 firebaseInit();
@@ -43,7 +47,7 @@ export const Firebase = ({ children }: Props): JSX.Element => {
   const signUp = async (email: string, password: string): Promise<UserCredential> => {
     try {
       setWaitingAuthentication(true);
-      const response = await FirebaseApi.signUp(email, password);
+      const response = await FirebaseAuthApi.signUp(email, password);
       return Promise.resolve(response);
     } catch (error) {
       setWaitingAuthentication(false);
@@ -54,7 +58,7 @@ export const Firebase = ({ children }: Props): JSX.Element => {
   const signIn = async (email: string, password: string): Promise<UserCredential> => {
     try {
       setWaitingAuthentication(true);
-      const response = await FirebaseApi.signIn(email, password);
+      const response = await FirebaseAuthApi.signIn(email, password);
       return Promise.resolve(response);
     } catch (error) {
       setWaitingAuthentication(false);
@@ -80,7 +84,7 @@ export const Firebase = ({ children }: Props): JSX.Element => {
         return Promise.resolve(null);
       }
 
-      const firebaseResponse = await FirebaseApi.signInWithFacebook(token);
+      const firebaseResponse = await FirebaseAuthApi.signInWithFacebook(token);
       return Promise.resolve(firebaseResponse);
     } catch (error) {
       // setWaitingAuthentication(false);
@@ -91,10 +95,44 @@ export const Firebase = ({ children }: Props): JSX.Element => {
   const signOut = async (): Promise<boolean> => {
     try {
       setWaitingAuthentication(true);
-      await FirebaseApi.signOut();
+      await FirebaseAuthApi.signOut();
       return Promise.resolve(true);
     } catch (error) {
       setWaitingAuthentication(false);
+      return Promise.reject(error);
+    }
+  };
+
+  const uploadImage = async (uri: string, imageId: string): Promise<UploadTask> => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      const result = await FirebaseStorageApi.uploadFile(blob, imageId);
+      return Promise.resolve(result);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
+  const getImageDownloadUrl = async (imageId: string): Promise<string> => {
+    try {
+      const response = await FirebaseStorageApi.getFileDownloadUrl(imageId);
+      return Promise.resolve(response);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
+  const updateCurrentUserProfile = async (payload: Partial<User>): Promise<void> => {
+    try {
+      const user = await FirebaseAuthApi.updateCurrentUserProfile(payload);
+      if (!user) {
+        return;
+      }
+
+      setUser(user);
+    } catch (error) {
       return Promise.reject(error);
     }
   };
@@ -109,6 +147,9 @@ export const Firebase = ({ children }: Props): JSX.Element => {
       signIn,
       signInWithFacebook,
       signOut,
+      uploadImage,
+      getImageDownloadUrl,
+      updateCurrentUserProfile,
     }),
     [user, isAuthenticated, waitingAuthentication],
   );

@@ -1,11 +1,12 @@
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import * as firebase from 'firebase';
 import { Text } from 'native-base';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Avatar } from 'react-native-elements';
-import { User } from '../../firebase/FirebaseApi';
+import { User } from '../../firebase/FirebaseAuthApi';
+import { useFirebase } from '../../firebase/useFirebase';
+import { Loader } from '../utility/loader/Loader';
 import { useToast } from '../utility/toast/useToast';
 
 type Props = {
@@ -15,12 +16,15 @@ type Props = {
 export const AccountInfo = (props: Props): JSX.Element | null => {
   const { user } = props;
   const { showToast } = useToast();
+  const { uploadImage, getImageDownloadUrl, updateCurrentUserProfile } = useFirebase();
+  const [loading, setLoading] = useState(false);
 
   if (!user) {
     return null;
   }
 
   const { uid, photoURL, displayName, email } = user;
+
   let name = displayName;
   if (!displayName && email) {
     name = email.slice(0, email.indexOf('@'));
@@ -39,29 +43,26 @@ export const AccountInfo = (props: Props): JSX.Element | null => {
         allowsEditing: true,
         aspect: [4, 3],
       });
-
       if (image.cancelled) {
         return;
       }
 
       const imageId = `avatar/${uid}`;
-      await uploadImage(image.uri, imageId);
+      setLoading(true);
+      await updateAvatar(image.uri, imageId);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       showToast(error);
-      return Promise.reject(error);
     }
   };
 
-  const uploadImage = async (
-    uri: string,
-    imageId: string,
-  ): Promise<firebase.storage.UploadTask> => {
+  const updateAvatar = async (uri: string, id: string): Promise<void> => {
     try {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      const ref = firebase.storage().ref().child(imageId);
-      return ref.put(blob);
+      await uploadImage(uri, id);
+      const photoURL = await getImageDownloadUrl(id);
+      const payload: Partial<User> = { photoURL };
+      await updateCurrentUserProfile(payload);
     } catch (error) {
       return Promise.reject(error);
     }
@@ -69,6 +70,7 @@ export const AccountInfo = (props: Props): JSX.Element | null => {
 
   return (
     <View style={styles.container}>
+      <Loader isVisible={loading} />
       <Avatar
         rounded={true}
         size='large'
