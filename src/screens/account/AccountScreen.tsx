@@ -7,7 +7,7 @@ import { Route } from '../../router/Route';
 
 export const AccountScreen = (): JSX.Element | null => {
   const navigation = useNavigation();
-  const { isAuthenticated, waitingAuthentication } = useFirebase();
+  const { authenticated: isAuthenticated, waitingAuthentication } = useFirebase();
   const isFocused = useIsFocused();
 
   useEffect(() => {

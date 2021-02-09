@@ -5,15 +5,15 @@ import { Overlay } from 'react-native-elements';
 import { Theme } from '../../../theme/Theme';
 
 type Props = {
-  isVisible: boolean;
+  visible: boolean;
   text?: string;
 };
 
 export const Loader = (props: Props): JSX.Element => {
-  const { isVisible, text } = props;
+  const { visible, text } = props;
 
   return (
-    <Overlay isVisible={isVisible} overlayStyle={styles.overlay}>
+    <Overlay isVisible={visible} overlayStyle={styles.overlay}>
       <View style={styles.view}>
         <ActivityIndicator size='large' color={Theme.color.brandDark} />
         {text && <Text style={styles.text}>{text}</Text>}

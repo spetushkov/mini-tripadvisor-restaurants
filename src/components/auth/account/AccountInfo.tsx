@@ -66,7 +66,7 @@ export const AccountInfo = (props: Props): JSX.Element | null => {
 
   return (
     <View style={styles.container}>
-      <Loader isVisible={loading} />
+      <Loader visible={loading} />
       <Avatar
         rounded={true}
         size='large'

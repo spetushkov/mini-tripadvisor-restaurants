@@ -13,7 +13,7 @@ type Props = {
 export type FirebaseContext = {
   app: App | null;
   user: User | null;
-  isAuthenticated: boolean;
+  authenticated: boolean;
   waitingAuthentication: boolean;
   signUp: (email: string, password: string) => Promise<UserCredential>;
   signIn: (email: string, password: string) => Promise<UserCredential>;
@@ -30,13 +30,13 @@ export const FirebaseContext = createContext({} as FirebaseContext);
 
 export const Firebase = ({ children }: Props): JSX.Element => {
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
   const [waitingAuthentication, setWaitingAuthentication] = useState(true);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
-      setIsAuthenticated(!!user);
+      setAuthenticated(!!user);
       setWaitingAuthentication(false);
     });
     return () => {
@@ -141,7 +141,7 @@ export const Firebase = ({ children }: Props): JSX.Element => {
     () => ({
       app: firebase.app(),
       user,
-      isAuthenticated,
+      authenticated,
       waitingAuthentication,
       signUp,
       signIn,
@@ -151,7 +151,7 @@ export const Firebase = ({ children }: Props): JSX.Element => {
       getImageDownloadUrl,
       updateCurrentUserProfile,
     }),
-    [user, isAuthenticated, waitingAuthentication],
+    [user, authenticated, waitingAuthentication],
   );
 
   return <FirebaseContext.Provider value={initialContext}>{children}</FirebaseContext.Provider>;
