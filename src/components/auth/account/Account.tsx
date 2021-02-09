@@ -1,11 +1,12 @@
 import { Button, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useFirebase } from '../../firebase/useFirebase';
-import { Theme } from '../../theme/Theme';
-import { useToast } from '../utility/toast/useToast';
+import { useFirebase } from '../../../firebase/useFirebase';
+import { Theme } from '../../../theme/Theme';
+import { useToast } from '../../utility/toast/useToast';
+import { AuthStyles } from '../AuthStyles';
 import { AccountInfo } from './AccountInfo';
-import { AuthStyles } from './AuthStyles';
+import { AccountOptions } from './AccountOptions';
 
 export const Account = (): JSX.Element => {
   const { user, signOut } = useFirebase();
@@ -22,7 +23,7 @@ export const Account = (): JSX.Element => {
   return (
     <View style={styles.view}>
       <AccountInfo user={user} />
-      <Text>Account Options</Text>
+      <AccountOptions />
       <Button
         style={[styles.button, styles.buttonSignOut]}
         bordered

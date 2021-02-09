@@ -1,7 +1,7 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { Account } from '../../components/auth/Account';
+import { Account } from '../../components/auth/account/Account';
 import { useFirebase } from '../../firebase/useFirebase';
 import { Route } from '../../router/Route';
 
