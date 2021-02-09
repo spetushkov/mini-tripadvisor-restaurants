@@ -1,5 +1,6 @@
+import { Text, View } from 'native-base';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Theme } from '../../../theme/Theme';
 
 type Props = {
@@ -27,7 +28,7 @@ export const FormItemError = (props: Props): JSX.Element | null => {
 
 const styles = StyleSheet.create({
   text: {
-    color: Theme.color.red,
+    color: Theme.color.brandDanger,
     fontSize: 14,
     marginTop: 10,
   },

@@ -1,14 +1,13 @@
 export const Theme = {
   color: {
-    green: '#00a680',
-    greenDisabled: 'rgba(0, 166, 128, 0.6)',
-    grey: '#646464',
-    greyLight: '#ccc',
-    greyLight2: '#e3e3e3',
+    brandPrimary: '#00a680',
+    brandPrimaryDisabled: 'rgba(0, 166, 128, 0.6)',
+    brandInfo: '#646464',
+    brandDanger: '#ff0000',
+    brandLight: '#fff',
+    brandDark: '#000',
+    greyLight: '#e3e3e3',
+    grey: '#ccc',
     greyDark: '#5f5f5f',
-    blue: '#03cafc',
-    red: '#ff0000',
-    white: '#fff',
-    black: '#000',
   },
 };

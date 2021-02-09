@@ -29,7 +29,11 @@ export const FormButton = (props: Props): JSX.Element => {
         </View>
         <View style={styles.activityContainer}>
           {loading && (
-            <ActivityIndicator style={styles.activity} size='small' color={Theme.color.white} />
+            <ActivityIndicator
+              style={styles.activity}
+              size='small'
+              color={Theme.color.brandLight}
+            />
           )}
         </View>
       </View>
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 6,
   },
   text: {
-    color: Theme.color.white,
+    color: Theme.color.brandLight,
     fontWeight: 'bold',
     fontSize: 16,
     marginLeft: '50%',

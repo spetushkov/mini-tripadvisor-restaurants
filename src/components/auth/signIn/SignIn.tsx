@@ -59,6 +59,7 @@ export const SignIn = (): JSX.Element | null => {
               icon='at'
               placeholder='Email'
               autoCapitalize='none'
+              helpText='some help text'
             />
             <FormItem
               {...getFormItemProps(form, 'password')}
@@ -103,7 +104,7 @@ export const SignIn = (): JSX.Element | null => {
 const styles = StyleSheet.create({
   ...AuthStyles,
   divider: {
-    borderBottomColor: Theme.color.green,
+    borderBottomColor: Theme.color.grey,
     width: '100%',
     margin: 20,
   },

@@ -13,26 +13,25 @@ export const AuthStyles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
-    backgroundColor: Theme.color.green,
+    backgroundColor: Theme.color.brandPrimary,
     marginTop: 30,
   },
   buttonDisabled: {
-    backgroundColor: Theme.color.greenDisabled,
+    backgroundColor: Theme.color.brandPrimaryDisabled,
   },
   buttonText: {
-    color: Theme.color.white,
+    color: Theme.color.brandLight,
     fontWeight: 'bold',
     fontSize: 16,
   },
   icon: {
-    color: Theme.color.greyLight,
+    color: Theme.color.grey,
   },
   textAccount: {
     marginTop: 15,
     marginHorizontal: 10,
   },
   buttonAccount: {
-    color: Theme.color.green,
-    fontWeight: 'bold',
+    color: Theme.color.brandPrimary,
   },
 });

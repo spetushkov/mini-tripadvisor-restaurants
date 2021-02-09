@@ -12,9 +12,7 @@ type Props = {
 type AccountMenuOption = {
   id: string;
   title: string;
-  iconType?: 'MaterialCommunityIcons';
   iconName: string;
-  iconColor: string;
 };
 
 export const AccountOptions = (props: Props): JSX.Element => {
@@ -37,9 +35,9 @@ export const AccountOptions = (props: Props): JSX.Element => {
           >
             <Left>
               <Icon
-                type={menu.iconType}
+                type='MaterialCommunityIcons'
                 name={menu.iconName}
-                style={{ color: menu.iconColor, width: 35 }}
+                style={{ color: Theme.color.grey, width: 35 }}
               />
             </Left>
             <Body>
@@ -59,23 +57,17 @@ const accountMenuOptions: AccountMenuOption[] = [
   {
     id: 'name',
     title: 'Change name',
-    iconType: 'MaterialCommunityIcons',
     iconName: 'account-circle',
-    iconColor: Theme.color.greyLight,
   },
   {
     id: 'email',
     title: 'Change email',
-    iconType: 'MaterialCommunityIcons',
     iconName: 'at',
-    iconColor: Theme.color.greyLight,
   },
   {
     id: 'password',
     title: 'Change password',
-    iconType: 'MaterialCommunityIcons',
     iconName: 'lock-reset',
-    iconColor: Theme.color.greyLight,
   },
 ];
 
@@ -83,6 +75,6 @@ const styles = StyleSheet.create({
   listItem: {
     marginLeft: 0,
     paddingLeft: 15,
-    backgroundColor: Theme.color.white,
+    backgroundColor: Theme.color.brandLight,
   },
 });

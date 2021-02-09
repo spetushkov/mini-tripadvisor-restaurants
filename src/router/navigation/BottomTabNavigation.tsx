@@ -27,8 +27,8 @@ const BottomTabNavigator = (): JSX.Element => {
     <BottomTab.Navigator
       initialRouteName={Route.BottomTab.restaurants}
       tabBarOptions={{
-        inactiveTintColor: Theme.color.grey,
-        activeTintColor: Theme.color.green,
+        inactiveTintColor: Theme.color.brandInfo,
+        activeTintColor: Theme.color.brandPrimary,
         labelStyle: {
           fontSize: 12,
         },

@@ -21,7 +21,7 @@ export const Account = (): JSX.Element => {
   };
 
   return (
-    <View style={styles.view}>
+    <View>
       <AccountInfo user={user} />
       <AccountOptions user={user} />
       <Button
@@ -39,14 +39,10 @@ export const Account = (): JSX.Element => {
 const styles = StyleSheet.create({
   ...AuthStyles,
   buttonSignOut: {
-    backgroundColor: Theme.color.white,
-    borderColor: Theme.color.greyLight2,
+    backgroundColor: Theme.color.brandLight,
+    borderColor: Theme.color.greyLight,
   },
   buttonSignOutText: {
-    color: Theme.color.green,
-  },
-  view: {
-    minHeight: '100%',
-    backgroundColor: '#f2f2f2',
+    color: Theme.color.brandPrimary,
   },
 });

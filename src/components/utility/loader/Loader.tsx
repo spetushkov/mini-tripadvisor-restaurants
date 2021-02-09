@@ -1,5 +1,6 @@
+import { Text } from 'native-base';
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { Theme } from '../../../theme/Theme';
 
@@ -14,7 +15,7 @@ export const Loader = (props: Props): JSX.Element => {
   return (
     <Overlay isVisible={isVisible} overlayStyle={styles.overlay}>
       <View style={styles.view}>
-        <ActivityIndicator size='large' color={Theme.color.black} />
+        <ActivityIndicator size='large' color={Theme.color.brandDark} />
         {text && <Text style={styles.text}>{text}</Text>}
       </View>
     </Overlay>
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: Theme.color.black,
+    color: Theme.color.brandDark,
     marginTop: 10,
   },
 });

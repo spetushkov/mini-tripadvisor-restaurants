@@ -1,5 +1,6 @@
+import { Text } from 'native-base';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Theme } from '../../../theme/Theme';
 
 type Props = {
@@ -56,10 +57,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontFamily: 'open-sans-bold',
     fontSize: 20,
-    color: Theme.color.grey,
+    color: Theme.color.brandInfo,
   },
   message: {
     fontFamily: 'open-sans',
-    color: Theme.color.grey,
+    color: Theme.color.brandInfo,
   },
 });

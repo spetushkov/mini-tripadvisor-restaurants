@@ -88,8 +88,7 @@ const styles = StyleSheet.create({
   item: {
     width: '100%',
   },
-
   icon: {
-    color: Theme.color.greyLight,
+    color: Theme.color.grey,
   },
 });
