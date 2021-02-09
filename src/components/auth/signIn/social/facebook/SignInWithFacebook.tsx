@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { SocialIcon } from 'react-native-elements';
 import { useFirebase } from '../../../../../firebase/useFirebase';
-import { useToast } from '../../../../app/useToast';
+import { useToast } from '../../../../utility/toast/useToast';
 
 export const SignInWithFacebook = (): JSX.Element => {
   const navigation = useNavigation();
@@ -10,14 +10,13 @@ export const SignInWithFacebook = (): JSX.Element => {
   const { signInWithFacebook } = useFirebase();
   const [loading, setLoading] = useState(false);
 
-  const onsSignInWithFacebook = async () => {
+  const onSignInWithFacebook = async () => {
     try {
       setLoading(true);
       const result = await signInWithFacebook();
       setLoading(false);
 
       if (result) {
-        console.log('result', result);
         // navigation.reset({ index: 0, routes: [{ name: Route.AccountStack.account }] });
       }
     } catch (error) {
@@ -31,7 +30,7 @@ export const SignInWithFacebook = (): JSX.Element => {
       title='Sign In using Facebook'
       button={true}
       type='facebook'
-      onPress={onsSignInWithFacebook}
+      onPress={onSignInWithFacebook}
     />
   );
 };

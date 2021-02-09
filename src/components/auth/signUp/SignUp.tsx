@@ -5,10 +5,10 @@ import React, { useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useFirebase } from '../../../firebase/useFirebase';
 import { Route } from '../../../router/Route';
-import { useToast } from '../../app/useToast';
 import { FormButton } from '../../utility/form/FormButton';
 import { FormItem } from '../../utility/form/FormItem';
 import { getFormItemProps, getFormState, validateForm } from '../../utility/form/FormUtils';
+import { useToast } from '../../utility/toast/useToast';
 import { AuthStyles } from '../AuthStyles';
 import { SignUpFormEntity } from './SignUpFormEntity';
 
@@ -73,11 +73,11 @@ export const SignUp = (): JSX.Element => {
           />
           <Text style={styles.textAccount}>
             {'By signing up, you agree to our '}
-            <Text style={styles.buttonAccount} onPress={() => console.log('agreement')}>
+            <Text style={styles.buttonAccount} onPress={() => console.log('Terms of Service')}>
               Terms of Service
             </Text>
             {' and '}
-            <Text style={styles.buttonAccount} onPress={() => console.log('agreement')}>
+            <Text style={styles.buttonAccount} onPress={() => console.log('Privacy Policy')}>
               Privacy Policy
             </Text>
           </Text>

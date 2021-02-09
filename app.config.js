@@ -1,7 +1,9 @@
 import dotenvExpand from 'dotenv-expand';
 import dotenvFlow from 'dotenv-flow';
 
-const env = dotenvFlow.config();
+const env = dotenvFlow.config({
+  silent: true,
+});
 dotenvExpand(env);
 
 export default {
@@ -23,6 +25,9 @@ export default {
     ios: {
       supportsTablet: true,
     },
+    android: {
+      permissions: ['CAMERA_ROLL', 'READ_EXTERNAL_STORAGE', 'WRITE_EXTERNAL_STORAGE'],
+    },
     web: {
       favicon: './src/assets/favicon.png',
     },
@@ -35,6 +40,8 @@ export default {
       REACT_NATIVE_FIREBASE_MESSAGING_SENDER_ID:
         process.env.REACT_NATIVE_FIREBASE_MESSAGING_SENDER_ID,
       REACT_NATIVE_FIREBASE_APP_ID: process.env.REACT_NATIVE_FIREBASE_APP_ID,
+      REACT_NATIVE_FACEBOOK_APP_ID: process.env.REACT_NATIVE_FACEBOOK_APP_ID,
+      REACT_NATIVE_FACEBOOK_APP_NAME: process.env.REACT_NATIVE_FACEBOOK_APP_NAME,
     },
   },
 };

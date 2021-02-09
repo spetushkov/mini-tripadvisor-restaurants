@@ -1,4 +1,5 @@
 import Constants from 'expo-constants';
+import * as firebase from 'firebase';
 
 export const FirebaseConfig = {
   apiKey: Constants.manifest.extra.REACT_NATIVE_FIREBASE_API_KEY,
@@ -7,4 +8,11 @@ export const FirebaseConfig = {
   storageBucket: Constants.manifest.extra.REACT_NATIVE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: Constants.manifest.extra.REACT_NATIVE_FIREBASE_MESSAGING_SENDER_ID,
   appId: Constants.manifest.extra.REACT_NATIVE_FIREBASE_APP_ID,
+};
+
+export const init = (): void => {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(FirebaseConfig);
+  }
+  console.log(`Firebase: started project ${FirebaseConfig.projectId}`);
 };

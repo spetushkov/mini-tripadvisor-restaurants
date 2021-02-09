@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useFirebase } from '../../firebase/useFirebase';
 import { Theme } from '../../theme/Theme';
-import { useToast } from '../app/useToast';
+import { useToast } from '../utility/toast/useToast';
 import { AccountInfo } from './AccountInfo';
 import { AuthStyles } from './AuthStyles';
 

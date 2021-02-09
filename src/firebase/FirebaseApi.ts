@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 export type App = firebase.app.App;
 export type User = firebase.User;
@@ -26,10 +26,8 @@ const signInWithFacebook = async (token: string): Promise<UserCredential> => {
   try {
     const credentials = firebase.auth.FacebookAuthProvider.credential(token);
     const response = await firebase.auth().signInWithCredential(credentials);
-    console.log('response', response);
     return Promise.resolve(response);
   } catch (error) {
-    console.log('error', error);
     return Promise.reject(error);
   }
 };

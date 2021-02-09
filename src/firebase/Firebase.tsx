@@ -1,9 +1,9 @@
 import * as Facebook from 'expo-facebook';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { FacebookConfig } from '../facebook/FacebookConfig';
+import { FacebookConfig, init as facebookInit } from '../facebook/FacebookConfig';
 import { App, FirebaseApi, User, UserCredential } from './FirebaseApi';
-import { FirebaseConfig } from './FirebaseConfig';
+import { init as firebaseInit } from './FirebaseConfig';
 
 type Props = {
   children: React.ReactNode;
@@ -20,10 +20,7 @@ export type FirebaseContext = {
   signOut: () => Promise<boolean>;
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(FirebaseConfig);
-}
-console.log(`Firebase: started project ${FirebaseConfig.projectId}`);
+firebaseInit();
 
 export const FirebaseContext = createContext({} as FirebaseContext);
 
@@ -69,24 +66,22 @@ export const Firebase = ({ children }: Props): JSX.Element => {
     try {
       // setWaitingAuthentication(true);
 
-      const { appId, appName } = FacebookConfig;
-      await Facebook.initializeAsync({ appId, appName });
+      await facebookInit();
 
-      const loginResult = await Facebook.logInWithReadPermissionsAsync({
-        permissions: FacebookConfig.permissions,
-      });
+      const { permissions } = FacebookConfig;
+      const fbResponse = await Facebook.logInWithReadPermissionsAsync({ permissions });
 
-      if (loginResult.type === 'cancel') {
+      if (fbResponse.type === 'cancel') {
         return Promise.resolve(null);
       }
 
-      const token = loginResult.type === 'success' && loginResult.token ? loginResult.token : '';
+      const token = fbResponse.type === 'success' && fbResponse.token ? fbResponse.token : '';
       if (!token) {
         return Promise.resolve(null);
       }
 
-      const response = await FirebaseApi.signInWithFacebook(token);
-      return Promise.resolve(response);
+      const firebaseResponse = await FirebaseApi.signInWithFacebook(token);
+      return Promise.resolve(firebaseResponse);
     } catch (error) {
       // setWaitingAuthentication(false);
       return Promise.reject(error);
