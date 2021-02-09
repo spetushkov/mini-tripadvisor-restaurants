@@ -23,7 +23,7 @@ export const Account = (): JSX.Element => {
   return (
     <View style={styles.view}>
       <AccountInfo user={user} />
-      <AccountOptions />
+      <AccountOptions user={user} />
       <Button
         style={[styles.button, styles.buttonSignOut]}
         bordered
