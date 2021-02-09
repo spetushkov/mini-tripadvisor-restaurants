@@ -5,6 +5,7 @@ import React, { useMemo, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useFirebase } from '../../../firebase/useFirebase';
 import { Route } from '../../../router/Route';
+import { Theme } from '../../../theme/Theme';
 import { FormButton } from '../../utility/form/FormButton';
 import { FormItem } from '../../utility/form/FormItem';
 import { getFormItemProps, getFormState, validateForm } from '../../utility/form/FormUtils';
@@ -50,7 +51,7 @@ export const SignUp = (): JSX.Element => {
       onSubmit={onSubmitForm}
     >
       {(form) => (
-        <Form style={styles.emailPasswordAuth}>
+        <Form style={styles.authForm}>
           <FormItem
             {...getFormItemProps(form, 'email')}
             icon='at'
@@ -71,13 +72,13 @@ export const SignUp = (): JSX.Element => {
             placeholder='Confirm password'
             secureTextEntry={!showConfirmPassword}
           />
-          <Text style={styles.textAccount}>
+          <Text style={styles.info}>
             {'By signing up, you agree to our '}
-            <Text style={styles.buttonAccount} onPress={() => console.log('Terms of Service')}>
+            <Text style={styles.action} onPress={() => console.log('Terms of Service')}>
               Terms of Service
             </Text>
             {' and '}
-            <Text style={styles.buttonAccount} onPress={() => console.log('Privacy Policy')}>
+            <Text style={styles.action} onPress={() => console.log('Privacy Policy')}>
               Privacy Policy
             </Text>
           </Text>
@@ -89,10 +90,10 @@ export const SignUp = (): JSX.Element => {
             disabled={loading}
             disabledStyle={styles.buttonDisabled}
           />
-          <Text style={styles.textAccount}>
+          <Text style={styles.text}>
             {'Already have an account? '}
             <Text
-              style={styles.buttonAccount}
+              style={styles.action}
               onPress={() => navigation.navigate(Route.AccountStack.signin)}
             >
               Sign In
@@ -106,4 +107,7 @@ export const SignUp = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   ...AuthStyles,
+  info: {
+    color: Theme.color.brandInfo,
+  },
 });

@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 40,
-    marginTop: '50%',
+    marginHorizontal: 20,
+    marginTop: '20%',
   },
   title: {
     marginVertical: 10,

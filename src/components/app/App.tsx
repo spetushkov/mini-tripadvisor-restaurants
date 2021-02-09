@@ -6,7 +6,7 @@ import 'reflect-metadata';
 import { Firebase } from '../../firebase/Firebase';
 import { useCustomFonts } from '../../font/useCustomFonts';
 import { Router } from '../../router/Router';
-import { Outline } from '../outline/Outline';
+import { Anatomy } from '../frame/Anatomy';
 import { ExceptionHandler } from '../utility/exception/ExceptionHandler';
 import { AppContext } from './AppContext';
 
@@ -29,7 +29,7 @@ export const App = (): JSX.Element => {
       <AppContext>
         <Firebase>
           <Router>
-            <Outline />
+            <Anatomy />
           </Router>
         </Firebase>
       </AppContext>

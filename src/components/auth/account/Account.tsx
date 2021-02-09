@@ -30,7 +30,7 @@ export const Account = (): JSX.Element => {
         full={true}
         onPress={onSignOut}
       >
-        <Text style={[styles.buttonText, styles.buttonSignOutText]}>Sign Out</Text>
+        <Text style={styles.buttonText}>Sign Out</Text>
       </Button>
     </View>
   );
@@ -42,7 +42,9 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.color.brandLight,
     borderColor: Theme.color.greyLight,
   },
-  buttonSignOutText: {
+  buttonText: {
     color: Theme.color.brandPrimary,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

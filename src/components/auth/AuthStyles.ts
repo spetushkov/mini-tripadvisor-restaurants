@@ -2,14 +2,10 @@ import { StyleSheet } from 'react-native';
 import { Theme } from '../../theme/Theme';
 
 export const AuthStyles = StyleSheet.create({
-  emailPasswordAuth: {
+  authForm: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-  },
-  item: {
-    width: '100%',
     marginTop: 20,
   },
   button: {
@@ -19,19 +15,11 @@ export const AuthStyles = StyleSheet.create({
   buttonDisabled: {
     backgroundColor: Theme.color.brandPrimaryDisabled,
   },
-  buttonText: {
-    color: Theme.color.brandLight,
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  icon: {
-    color: Theme.color.grey,
-  },
-  textAccount: {
+  text: {
     marginTop: 15,
     marginHorizontal: 10,
   },
-  buttonAccount: {
+  action: {
     color: Theme.color.brandPrimary,
   },
 });

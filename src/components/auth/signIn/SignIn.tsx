@@ -53,13 +53,12 @@ export const SignIn = (): JSX.Element | null => {
         onSubmit={onSubmitForm}
       >
         {(form) => (
-          <Form style={styles.emailPasswordAuth}>
+          <Form style={styles.authForm}>
             <FormItem
               {...getFormItemProps(form, 'email')}
               icon='at'
               placeholder='Email'
               autoCapitalize='none'
-              helpText='some help text'
             />
             <FormItem
               {...getFormItemProps(form, 'password')}
@@ -76,17 +75,17 @@ export const SignIn = (): JSX.Element | null => {
               disabled={loading}
               disabledStyle={styles.buttonDisabled}
             />
-            <Text style={styles.textAccount}>
+            <Text style={styles.text}>
               {"Don't have an account? "}
               <Text
-                style={styles.buttonAccount}
+                style={styles.action}
                 onPress={() => navigation.navigate(Route.AccountStack.signup)}
               >
                 Sign Up
               </Text>
             </Text>
-            <Text style={styles.textAccount}>
-              <Text style={styles.buttonAccount} onPress={() => console.log('Forgot password')}>
+            <Text style={styles.text}>
+              <Text style={styles.action} onPress={() => console.log('Forgot password')}>
                 Forgot password?
               </Text>
             </Text>
